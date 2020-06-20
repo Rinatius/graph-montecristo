@@ -10,6 +10,7 @@ import Immutable from 'immutable'
 import { Graph } from "react-d3-graph";
 
 import './my-svg.svg'
+import GenericCard from "./Cards/GenericCard";
 
 
 class App extends Component {
@@ -119,8 +120,8 @@ class App extends Component {
     dispGraph.nodes = dispGraph.nodes.map((node) => {
       node.svg = 'https://fonts.gstatic.com/s/i/materialicons/account_circle/v6/24px.svg'
       //node.symbolType = "square"
-      node.viewGenerator = (n) => <div>{JSON.stringify(n)}</div>
-      node.size = 1000
+      node.viewGenerator = (n) => <div>{<GenericCard />}</div>
+      node.size = 3000
       return node
     })
     return dispGraph
@@ -133,7 +134,7 @@ class App extends Component {
     nodeHighlightBehavior: true,
     node: {
       color: "lightgreen",
-      size: 120,
+      //size: 120,
       highlightStrokeColor: "blue",
     },
     "d3": {
@@ -155,7 +156,7 @@ class App extends Component {
         />
         <Button variant="contained"
                 onClick={this.handleGoClick}>Go</Button>
-        {}
+        <div>{<GenericCard />}</div>
         <Graph
           id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
           data={this.state.displayGraph}
