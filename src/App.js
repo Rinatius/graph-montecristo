@@ -11,6 +11,7 @@ import { Graph } from "react-d3-graph";
 
 import './my-svg.svg'
 import GenericCard from "./Cards/GenericCard";
+import MGraph from "./MGraph/MGraph";
 
 
 class App extends Component {
@@ -22,8 +23,7 @@ class App extends Component {
     data: {},
     dataText: "",
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
-    invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
-    displayGraph: null
+    invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}})
   }
 
   handleGoClick = () => {
@@ -36,25 +36,17 @@ class App extends Component {
       .run(cypherQuery)
       .then(result => {
         let updatedVisibleGraph = this.toGraph(result, this.state.visibleGraph.toJS())
-        console.log(result.records)
-        console.log(result.records[0].keys)
-        console.log(updatedVisibleGraph)
-        console.log(Object.keys(updatedVisibleGraph.nodes).toString())
         const invisibleSession = this.driver.session()
         const paramIDs = Object.keys(updatedVisibleGraph.nodes).toString()
         invisibleSession
           .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
           .then(result => {
-            console.log(result)
             const updatedInvisibleGraph = this.toGraph(result,
               this.state.invisibleGraph.toJS())
             updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph,
               updatedInvisibleGraph)
-            console.log(updatedInvisibleGraph)
-            console.log(updatedVisibleGraph)
             this.setState({
-              visibleGraph: Immutable.fromJS(updatedVisibleGraph),
-              displayGraph: this.displayGraph(updatedVisibleGraph)
+              visibleGraph: Immutable.fromJS(updatedVisibleGraph)
             })
 
           })
@@ -100,10 +92,6 @@ class App extends Component {
 
   reconcileGraphs = (vGraph, iGraph) => {
     Object.keys(iGraph.edges).forEach((key) => {
-      // console.log(Object.keys(vGraph.nodes))
-      // console.log(iGraph.edges[key].from.toString())
-      // console.log(Object.keys(vGraph.nodes).includes(iGraph.edges[key].from.toString()))
-      // console.log(Object.keys(vGraph.nodes).includes(iGraph.edges[key].to.toString()))
       if (Object.keys(vGraph.nodes).includes(iGraph.edges[key].source.toString()) &&
       Object.keys(vGraph.nodes).includes(iGraph.edges[key].target.toString())) {
         vGraph.edges[key] = iGraph.edges[key]
@@ -112,50 +100,11 @@ class App extends Component {
     return vGraph
   }
 
-  displayGraph = (graph) => {
-    const dispGraph = {
-      nodes: Object.values(graph.nodes),
-      links: Object.values(graph.edges)
-    }
-    dispGraph.nodes = dispGraph.nodes.map((node) => {
-      //node.svg = 'https://fonts.gstatic.com/s/i/materialicons/account_circle/v6/24px.svg'
-      //node.symbolType = "square"
-      node.viewGenerator = (n) => {return <GenericCard uzel={n}/>}
-      //node.viewGenerator = <div>{<GenericCard />}</div>
-      node.size = 3000
-      return node
-    })
-    return dispGraph
-  }
-
-
-  myConfig = {
-    nodeHighlightBehavior: true,
-    node: {
-      color: "lightgreen",
-      //size: 120,
-      highlightStrokeColor: "blue",
-    //   viewGenerator: (n) => {
-    //     console.log(n.id)
-    //     return <GenericCard node={n}/>}
-    },
-    "d3": {
-      "linkLength": 300,
-      "linkStrength": 0.1,
-    },
-    link: {
-      highlightColor: "lightblue",
-    },
-  };
-
   render() {
     let graph = null
-    if (this.state.displayGraph !== null) {
-      graph = <Graph
-        id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
-        data={this.state.displayGraph}
-        config={this.myConfig}
-      />
+    console.log(Object.keys(this.state.visibleGraph.toJS().nodes).length)
+    if (Object.keys(this.state.visibleGraph.toJS().nodes).length !== 0) {
+      graph = <MGraph visibleGraph={this.state.visibleGraph}/>
     }
     return (
       <div className="App">
