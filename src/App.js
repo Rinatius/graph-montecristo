@@ -23,7 +23,7 @@ class App extends Component {
     dataText: "",
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
     invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
-    displayGraph: {nodes:[{id:1}, {id:4}], links: [{source:1, target:4}]}
+    displayGraph: null
   }
 
   handleGoClick = () => {
@@ -118,9 +118,10 @@ class App extends Component {
       links: Object.values(graph.edges)
     }
     dispGraph.nodes = dispGraph.nodes.map((node) => {
-      node.svg = 'https://fonts.gstatic.com/s/i/materialicons/account_circle/v6/24px.svg'
+      //node.svg = 'https://fonts.gstatic.com/s/i/materialicons/account_circle/v6/24px.svg'
       //node.symbolType = "square"
-      node.viewGenerator = (n) => <div>{<GenericCard />}</div>
+      node.viewGenerator = (n) => {return <GenericCard uzel={n}/>}
+      //node.viewGenerator = <div>{<GenericCard />}</div>
       node.size = 3000
       return node
     })
@@ -128,14 +129,15 @@ class App extends Component {
   }
 
 
-  check = {nodes: [{id: 1}, {id: 4}], links: [{source: 1, target: 4}]}
-
   myConfig = {
     nodeHighlightBehavior: true,
     node: {
       color: "lightgreen",
       //size: 120,
       highlightStrokeColor: "blue",
+    //   viewGenerator: (n) => {
+    //     console.log(n.id)
+    //     return <GenericCard node={n}/>}
     },
     "d3": {
       "linkLength": 300,
@@ -147,6 +149,14 @@ class App extends Component {
   };
 
   render() {
+    let graph = null
+    if (this.state.displayGraph !== null) {
+      graph = <Graph
+        id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
+        data={this.state.displayGraph}
+        config={this.myConfig}
+      />
+    }
     return (
       <div className="App">
         <TextField id="query"
@@ -156,13 +166,7 @@ class App extends Component {
         />
         <Button variant="contained"
                 onClick={this.handleGoClick}>Go</Button>
-        <div>{<GenericCard />}</div>
-        <Graph
-          id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
-          data={this.state.displayGraph}
-          config={this.myConfig}
-        />
-
+        {graph}
       </div>
     );
   }
