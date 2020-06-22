@@ -1,5 +1,6 @@
 import React from "react";
 import GenericCard from "../Cards/GenericCard";
+import CompanyCard from "../Cards/CompanyCard";
 import {Graph} from "react-d3-graph";
 
 
@@ -22,9 +23,14 @@ const myConfig = {
     color: "lightgreen",
     highlightStrokeColor: "blue",
     viewGenerator: (n) => {
-      return <GenericCard uzel={n}/>
+      console.log(n)
+      if (n.labels.includes("KgMinjust")) {
+        return <CompanyCard node={n} vGraph={null} iGraph={null} />
+      } else {
+        return <GenericCard uzel={n}/>
+      }
     },
-    size: 3000
+    size: 4000
   }
   ,
   "d3": {
