@@ -14,7 +14,7 @@ import { red } from '@material-ui/core/colors';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import BusinessIcon from '@material-ui/icons/Business';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import NestedLinks from './NestedLinks'
 import shorten from './utils/shorten'
@@ -55,7 +55,7 @@ export default function RecipeReviewCard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            <BusinessIcon />
+            <AccountCircleIcon />
           </Avatar>
         }
         action={

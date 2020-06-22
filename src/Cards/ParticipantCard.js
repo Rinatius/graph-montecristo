@@ -10,7 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -38,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: blue[500],
   },
 }));
 
-export default function RecipeReviewCard(props) {
+export default function Test(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -63,7 +63,7 @@ export default function RecipeReviewCard(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        //subheader={<a href={props.node.properties.url} target="_blank">Минюст</a>}
+        subheader={<a href={""} target="_blank">Гос. закупки</a>}
       />
       {/*<CardMedia*/}
       {/*  className={classes.media}*/}
@@ -73,7 +73,7 @@ export default function RecipeReviewCard(props) {
       <CardContent>
         <Typography variant="body2" color="textPrimary" component="p">
           {shorten(props.node.properties.name)}<br></br>
-          ИНН: {props.node.properties.inn.slice(0, 30) } 
+          ИНН: {props.node.properties.inn.slice(0, 30) }
         </Typography>
         <NestedLinks
           node={props.node}

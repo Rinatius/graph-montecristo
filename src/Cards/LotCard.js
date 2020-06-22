@@ -10,11 +10,11 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import BusinessIcon from '@material-ui/icons/Business';
+import GavelIcon from '@material-ui/icons/Gavel';
 
 import NestedLinks from './NestedLinks'
 import shorten from './utils/shorten'
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: blue[500],
   },
 }));
 
@@ -55,7 +55,7 @@ export default function RecipeReviewCard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            <BusinessIcon />
+            <GavelIcon />
           </Avatar>
         }
         action={
@@ -63,7 +63,7 @@ export default function RecipeReviewCard(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        subheader={<a href={props.node.properties.tender_url} target="_blank">Тендер</a>}
+        subheader={<a href={props.node.properties.tender_url} target="_blank">Гос. закупки</a>}
       />
       {/*<CardMedia*/}
       {/*  className={classes.media}*/}
