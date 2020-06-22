@@ -1,6 +1,10 @@
 import React from "react";
 import GenericCard from "../Cards/GenericCard";
 import CompanyCard from "../Cards/CompanyCard";
+import DirectorCard from "../Cards/DirectorCard";
+import FounderCard from "../Cards/FounderCard";
+import LotCard from "../Cards/LotCard";
+import ParticipantCard from "../Cards/ParticipantCard";
 import {Graph} from "react-d3-graph";
 
 
@@ -25,7 +29,25 @@ const myConfig = {
     viewGenerator: (n) => {
       console.log(n)
       if (n.labels.includes("KgMinjust")) {
-        return <CompanyCard node={n} vGraph={null} iGraph={null} />
+        console.log("KgMinjust")
+        return <CompanyCard node={n} vGraph={null} iGraph={null} />        
+     
+      } else if(n.labels.includes("KgMinjustParticipants")) {
+        console.log("KgMinjustParticipants")
+        return <FounderCard node={n} vGraph={null} iGraph={null} />
+      
+      } else if(n.labels.includes("HeadNameSur")) {
+        console.log("HeadNameSur")
+        return <DirectorCard node={n} vGraph={null} iGraph={null} />
+
+      } else if(n.labels.includes("KgProcurementParticipants")) {
+        console.log("KgProcurementParticipants")
+        return <ParticipantCard node={n} vGraph={null} iGraph={null} />
+
+      } else if(n.labels.includes("KgProcurementLots")) {
+        console.log("KgProcurementLots")
+        return <LotCard node={n} vGraph={null} iGraph={null} />
+
       } else {
         return <GenericCard uzel={n}/>
       }

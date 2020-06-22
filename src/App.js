@@ -19,7 +19,7 @@ class App extends Component {
   driver = neo4j.driver('bolt://neo4j.kloop.io:7687')
 
   state = {
-    cypherQuery: "MATCH (n) where id(n) in [200] return n",
+    cypherQuery: "MATCH (n) where id(n) in [2429298] return n",
     data: {},
     dataText: "",
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
