@@ -86,7 +86,7 @@ export default function NestedLinks(props) {
    
     let keys = Object.keys(iEdges).map((key) => {
      
-      if (iEdges[key].type == type){
+      if ((iEdges[key].type == type) && (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString())){
         return key
       }
     })
