@@ -79,7 +79,8 @@ export default function RecipeReviewCard(props) {
         <NestedLinks
           node={props.node}
           vGraph={props.vGraph}
-          iGraph={props.iGraph} />
+          iGraph={props.iGraph}
+          onButtonClick={props.onButtonClick}  />
       </CardContent>
       <CardActions disableSpacing>
         {/*<IconButton aria-label="add to favorites">*/}

@@ -60,15 +60,44 @@ export default function NestedLinks(props) {
       return obj;
   }, {});
 
-  console.log(listOfRelationships)  
-
-  //Delete 'undefined' in listOfRelationships
-  listOfRelationships = Object.keys(listOfRelationships).reduce((object, key) => {
+   //Delete 'undefined' in listOfRelationships
+   listOfRelationships = Object.keys(listOfRelationships).reduce((object, key) => {
     if (key !== 'undefined') {
       object[key] = listOfRelationships[key]
     }
     return object
   }, {})
+
+  let listOfRelationshipsId = Object.keys(iEdges).map((key) => {
+    if (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString()){
+      return key
+    }
+  });
+
+  //Delete 'undefined' in listOfRelationshipsId
+  listOfRelationshipsId = listOfRelationshipsId.filter(function( element ) {
+    return element !== undefined;
+  });
+  
+  console.log(listOfRelationshipsId)
+ 
+  const getKeyRelationshipIds = (type) => {
+    console.log("getKeyRelationshipIds")
+   
+    let keys = Object.keys(iEdges).map((key) => {
+     
+      if (iEdges[key].type == type){
+        return key
+      }
+    })
+
+    keys = keys.filter(function( element ) {
+      return element !== undefined;
+    });
+
+    return keys
+  };
+
 
   return (
     <List
@@ -83,11 +112,12 @@ export default function NestedLinks(props) {
     >
 
       {Object.keys(listOfRelationships).map((key) => {
-        return (<ListItem button>
+        const keys = getKeyRelationshipIds(key)
+        return (<ListItem button onClick={() => props.onButtonClick(keys)}>
           {/*<ListItemIcon>*/}
           {/*  <SendIcon />*/}
           {/*</ListItemIcon>*/}
-          <ListItemText primary={key + ' (' + listOfRelationships[key] + ')'} />
+          <ListItemText primary={key + ' (' + listOfRelationships[key] + ')'}  />
         </ListItem>)
       })}
       <ListItem button onClick={handleClick}>

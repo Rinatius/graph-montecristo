@@ -24,7 +24,7 @@ const MGraph = (props) => {
   console.log('MGRAPH')
   console.log(props)
   console.log(props.visibleGraph.toJS())
-  console.log(props.invisibleGraph.toJS())
+  console.log(props.invisibleGraph.toJS()) 
 
   const myConfig = {
 
@@ -38,23 +38,23 @@ const MGraph = (props) => {
         console.log(n)
         if (n.labels.includes("KgMinjust")) {
           console.log("KgMinjust")
-          return <CompanyCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} />        
+          return <CompanyCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />        
        
         } else if(n.labels.includes("KgMinjustParticipants")) {
           console.log("KgMinjustParticipants")
-          return <FounderCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} />
+          return <FounderCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
         
         } else if(n.labels.includes("HeadNameSur")) {
           console.log("HeadNameSur")
-          return <DirectorCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} />
+          return <DirectorCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
   
         } else if(n.labels.includes("KgProcurementParticipants")) {
           console.log("KgProcurementParticipants")
-          return <ParticipantCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} />
+          return <ParticipantCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
   
         } else if(n.labels.includes("KgProcurementLots")) {
           console.log("KgProcurementLots")
-          return <LotCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} />
+          return <LotCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
   
         } else {
           return <GenericCard uzel={n}/>
