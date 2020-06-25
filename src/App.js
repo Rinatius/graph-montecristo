@@ -36,27 +36,12 @@ class App extends Component {
       .run(cypherQuery)
       .then(result => {
         let updatedVisibleGraph = this.toGraph(result, this.state.visibleGraph.toJS())
-        const invisibleSession = this.driver.session()
         const paramIDs = Object.keys(updatedVisibleGraph.nodes).toString()
         console.log('INVISIBLE GRAPH')
-        
-        invisibleSession
-          .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
-          .then(result => {
-            const updatedInvisibleGraph = this.toGraph(result,
-              this.state.invisibleGraph.toJS())
-            updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph,
-              updatedInvisibleGraph)
-            this.setState({
-              visibleGraph: Immutable.fromJS(updatedVisibleGraph),
-              invisibleGraph: Immutable.fromJS(updatedInvisibleGraph)
-            })
-
-          })
-          .catch(error => {
-            console.log(error)
-          })
-          .then(() => session.close())
+        this.updateInvisible(paramIDs, updatedVisibleGraph) 
+        console.log(paramIDs)
+        console.log(this.state.visibleGraph.toJS())
+        console.log(this.state.invisibleGraph.toJS())
 
       })
       .catch(error => {
@@ -66,9 +51,31 @@ class App extends Component {
 
   }
 
+  updateInvisible = (paramIDs, updatedVisibleGraph) => {
+    const invisibleSession = this.driver.session()
+    invisibleSession
+      .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
+      .then(result => {
+        const updatedInvisibleGraph = this.toGraph(result,
+          this.state.invisibleGraph.toJS())
+        updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph,
+          updatedInvisibleGraph)
+        this.setState({
+          visibleGraph: Immutable.fromJS(updatedVisibleGraph),
+          invisibleGraph: Immutable.fromJS(updatedInvisibleGraph)
+        })
+
+      })
+      // .catch(error => {
+      //   console.log(error)
+      // })
+      // .then(() => session.close())
+  }
+
   handleCypherQueryTextChange = (event) => {
     this.setState({cypherQuery: event.target.value})
   }
+
 
   toGraph = (result, graph) => {
     result.records.forEach((records, i) => {
@@ -95,13 +102,30 @@ class App extends Component {
   }
 
   reconcileGraphs = (vGraph, iGraph) => {
+    console.log(Object.keys(vGraph.nodes).length)
+    console.log(Object.keys(vGraph.edges).length)
+    console.log(Object.keys(iGraph.nodes).length)
+    console.log(Object.keys(iGraph.edges).length)
     Object.keys(iGraph.edges).forEach((key) => {
       if (Object.keys(vGraph.nodes).includes(iGraph.edges[key].source.toString()) &&
       Object.keys(vGraph.nodes).includes(iGraph.edges[key].target.toString())) {
         vGraph.edges[key] = iGraph.edges[key]
       }
     })
+    console.log(Object.keys(vGraph.nodes).length)
+    console.log(Object.keys(vGraph.edges).length)
     return vGraph
+  }
+
+  handleButtonClick = (ids) => {
+    console.log('button clicked')
+    console.log(ids)
+    console.log(this.state.visibleGraph.toJS())
+    console.log(this.state.invisibleGraph.toJS())
+    let updatedVisibleGraph = this.updateInvisible(ids, this.state.visibleGraph.toJS(), this.state.invisibleGraph.toJS())
+    updatedVisibleGraph = this.reconcileGraphs(this.state.visibleGraph.toJS(), this.state.invisibleGraph.toJS())
+    console.log(updatedVisibleGraph)
+    this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
   }
 
   render() {
@@ -109,6 +133,7 @@ class App extends Component {
     console.log(Object.keys(this.state.visibleGraph.toJS().nodes).length)
     if (Object.keys(this.state.visibleGraph.toJS().nodes).length !== 0) {
       graph = <MGraph 
+        onButtonClick={this.handleButtonClick}
         visibleGraph={this.state.visibleGraph}
         invisibleGraph={this.state.invisibleGraph}/>
     }
