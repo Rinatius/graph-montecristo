@@ -69,19 +69,6 @@ const NestedLinks = (props) => {
     }
     return object
   }, {})
-
-  let listOfRelationshipsId = Object.keys(iEdges).map((key) => {
-    if (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString()){
-      return key
-    }
-  });
-
-  //Delete 'undefined' in listOfRelationshipsId
-  listOfRelationshipsId = listOfRelationshipsId.filter(function( element ) {
-    return element !== undefined;
-  });
-  
-  console.log(listOfRelationshipsId)
  
   const getKeyRelationshipIds = (type) => {
     console.log("getKeyRelationshipIds")
