@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 1000px;
 }
 
 .App-logo {
@@ -36,3 +37,11 @@
     transform: rotate(360deg);
   }
 }
+
+/* .d3graph-graph-wrapper {
+  height: 100%;
+}
+.svg-container-d3graph > svg {
+  height: 100% !important;
+  width: 100% !important;
+} */

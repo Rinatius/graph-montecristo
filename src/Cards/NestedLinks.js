@@ -24,13 +24,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NestedLinks() {
+export default function NestedLinks(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  console.log('NESTED LINKS')
+  // console.log(props.node)
+  // console.log(props.vGraph.toJS())
+  // console.log(props.iGraph.toJS()) 
+  
+  console.log(Object.keys(props.iGraph.toJS().edges)) 
+
+  const vNodes = props.vGraph.toJS().nodes
+  const vEdges = props.vGraph.toJS().edges
+
+  const iNodes = props.iGraph.toJS().nodes
+  const iEdges = props.iGraph.toJS().edges
+  
+  console.log(props.node.id)
+
+  let listOfRelationships = Object.keys(iEdges).map((key) => {
+    if (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString()){
+      return iEdges[key].type
+    }
+  }).reduce(function(obj, relation){
+      if (!obj[relation]) {
+          obj[relation] = 1;
+      } else {
+          obj[relation]++;
+      }
+      return obj;
+  }, {});
+
+  console.log(listOfRelationships)  
+
+  //Delete 'undefined' in listOfRelationships
+  listOfRelationships = Object.keys(listOfRelationships).reduce((object, key) => {
+    if (key !== 'undefined') {
+      object[key] = listOfRelationships[key]
+    }
+    return object
+  }, {})
 
   return (
     <List
@@ -43,12 +81,15 @@ export default function NestedLinks() {
       // }
       className={classes.root}
     >
-      <ListItem button>
-        {/*<ListItemIcon>*/}
-        {/*  <SendIcon />*/}
-        {/*</ListItemIcon>*/}
-        <ListItemText primary="Учредители (2)" />
-      </ListItem>
+
+      {Object.keys(listOfRelationships).map((key) => {
+        return (<ListItem button>
+          {/*<ListItemIcon>*/}
+          {/*  <SendIcon />*/}
+          {/*</ListItemIcon>*/}
+          <ListItemText primary={key + ' (' + listOfRelationships[key] + ')'} />
+        </ListItem>)
+      })}
       <ListItem button onClick={handleClick}>
         {/*<ListItemIcon>*/}
         {/*  <InboxIcon />*/}

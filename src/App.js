@@ -38,6 +38,8 @@ class App extends Component {
         let updatedVisibleGraph = this.toGraph(result, this.state.visibleGraph.toJS())
         const invisibleSession = this.driver.session()
         const paramIDs = Object.keys(updatedVisibleGraph.nodes).toString()
+        console.log('INVISIBLE GRAPH')
+        
         invisibleSession
           .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
           .then(result => {
@@ -46,7 +48,8 @@ class App extends Component {
             updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph,
               updatedInvisibleGraph)
             this.setState({
-              visibleGraph: Immutable.fromJS(updatedVisibleGraph)
+              visibleGraph: Immutable.fromJS(updatedVisibleGraph),
+              invisibleGraph: Immutable.fromJS(updatedInvisibleGraph)
             })
 
           })
@@ -87,6 +90,7 @@ class App extends Component {
         }
       })
     })
+    console.log(graph)
     return graph;
   }
 
@@ -104,7 +108,9 @@ class App extends Component {
     let graph = null
     console.log(Object.keys(this.state.visibleGraph.toJS().nodes).length)
     if (Object.keys(this.state.visibleGraph.toJS().nodes).length !== 0) {
-      graph = <MGraph visibleGraph={this.state.visibleGraph}/>
+      graph = <MGraph 
+        visibleGraph={this.state.visibleGraph}
+        invisibleGraph={this.state.invisibleGraph}/>
     }
     return (
       <div className="App">
