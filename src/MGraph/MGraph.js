@@ -98,7 +98,7 @@ const MGraph = (props) => {
 }
 
 const areEqual = (prevProps, nextProps) => {
-  return prevProps.visibleGraph === nextProps.visibleGraph;
+  return (prevProps.visibleGraph === nextProps.visibleGraph) && (prevProps.invisibleGraph === nextProps.invisibleGraph);
 }
 
 export default React.memo(MGraph, areEqual);

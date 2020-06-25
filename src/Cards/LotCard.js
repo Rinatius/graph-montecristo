@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard(props) {
+const RecipeReviewCard = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -108,3 +108,11 @@ export default function RecipeReviewCard(props) {
     </Card>
   );
 }
+
+const areEqual = (prevProps, nextProps) => {
+  return ((prevProps.vGraph === nextProps.vGraph) && 
+          (prevProps.iGraph === nextProps.iGraph) &&
+          (prevProps.node === nextProps.node));
+}
+
+export default React.memo(RecipeReviewCard, areEqual);

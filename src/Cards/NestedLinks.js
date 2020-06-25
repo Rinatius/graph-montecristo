@@ -13,6 +13,8 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NestedLinks(props) {
+const NestedLinks = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -114,9 +116,9 @@ export default function NestedLinks(props) {
       {Object.keys(listOfRelationships).map((key) => {
         const keys = getKeyRelationshipIds(key)
         return (<ListItem button onClick={() => props.onButtonClick(keys)}>
-          {/*<ListItemIcon>*/}
-          {/*  <SendIcon />*/}
-          {/*</ListItemIcon>*/}
+          <ListItemIcon>
+            <BubbleChartIcon />
+          </ListItemIcon>
           <ListItemText primary={key + ' (' + listOfRelationships[key] + ')'}  />
         </ListItem>)
       })}
@@ -140,3 +142,11 @@ export default function NestedLinks(props) {
     </List>
   );
 }
+
+const areEqual = (prevProps, nextProps) => {
+  return ((prevProps.vGraph === nextProps.vGraph) && 
+          (prevProps.iGraph === nextProps.iGraph) &&
+          (prevProps.node === nextProps.node));
+}
+
+export default React.memo(NestedLinks, areEqual);
