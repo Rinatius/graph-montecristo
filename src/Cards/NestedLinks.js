@@ -15,6 +15,8 @@ import StarBorder from '@material-ui/icons/StarBorder';
 
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
+import translate from './utils/translate'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -102,11 +104,11 @@ const NestedLinks = (props) => {
 
       {Object.keys(listOfRelationships).map((key) => {
         const keys = getKeyRelationshipIds(key)
-        return (<ListItem button onClick={() => props.onButtonClick(keys)}>
+        return (<ListItem button onClick={() => props.onButtonClick(keys)}>          
+          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'}  />
           <ListItemIcon>
             <BubbleChartIcon />
           </ListItemIcon>
-          <ListItemText primary={key + ' (' + listOfRelationships[key] + ')'}  />
         </ListItem>)
       })}
       <ListItem button onClick={handleClick}>

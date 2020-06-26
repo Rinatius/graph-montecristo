@@ -1,0 +1,13 @@
+{
+    "CONTROLS": "Учредитель", 
+    "ANNOUNCED": "Объявленные лоты", 
+    "DIRECTOR": "Директор",
+    "INCLUDES_LOTS": "Включает лоты",
+    "NAME_SAKE": "Тезки",
+    "NAME_SAKE_INDIVIDUAL": "Тезки ИП",
+    "PARTICIPATED_IN": "Участвовал в",
+    "PROBABLE_FATHER": "Возможно отец",
+    "PROBABLE_SIBLING": "Возможно брат-сестра",
+    "PROBABLE_KID": "Возможно сын-дочь",
+    "SAME_INN": "Одинаковые ИНН"
+}
