@@ -13,6 +13,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+
+import translate from './utils/translate'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NestedLinks(props) {
+const NestedLinks = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -67,19 +71,6 @@ export default function NestedLinks(props) {
     }
     return object
   }, {})
-
-  let listOfRelationshipsId = Object.keys(iEdges).map((key) => {
-    if (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString()){
-      return key
-    }
-  });
-
-  //Delete 'undefined' in listOfRelationshipsId
-  listOfRelationshipsId = listOfRelationshipsId.filter(function( element ) {
-    return element !== undefined;
-  });
-  
-  console.log(listOfRelationshipsId)
  
   const getKeyRelationshipIds = (type) => {
     console.log("getKeyRelationshipIds")
@@ -113,11 +104,11 @@ export default function NestedLinks(props) {
 
       {Object.keys(listOfRelationships).map((key) => {
         const keys = getKeyRelationshipIds(key)
-        return (<ListItem button onClick={() => props.onButtonClick(keys)}>
-          {/*<ListItemIcon>*/}
-          {/*  <SendIcon />*/}
-          {/*</ListItemIcon>*/}
-          <ListItemText primary={key + ' (' + listOfRelationships[key] + ')'}  />
+        return (<ListItem button onClick={() => props.onButtonClick(keys)}>          
+          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'}  />
+          <ListItemIcon>
+            <BubbleChartIcon />
+          </ListItemIcon>
         </ListItem>)
       })}
       <ListItem button onClick={handleClick}>
@@ -140,3 +131,11 @@ export default function NestedLinks(props) {
     </List>
   );
 }
+
+const areEqual = (prevProps, nextProps) => {
+  return ((prevProps.vGraph === nextProps.vGraph) && 
+          (prevProps.iGraph === nextProps.iGraph) &&
+          (prevProps.node === nextProps.node));
+}
+
+export default React.memo(NestedLinks, areEqual);
