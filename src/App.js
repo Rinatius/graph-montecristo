@@ -44,7 +44,7 @@ class App extends Component {
         let updatedVisibleGraph = this.toGraph(result, this.state.visibleGraph.toJS())
         const paramIDs = Object.keys(updatedVisibleGraph.nodes).toString()
         console.log('INVISIBLE GRAPH')
-        this.updateInvisible(paramIDs, updatedVisibleGraph) 
+        this.updateInvisible(paramIDs, updatedVisibleGraph, this.state.invisibleGraph.toJS()) 
         console.log(paramIDs)
         console.log(this.state.visibleGraph.toJS())
         console.log(this.state.invisibleGraph.toJS())
@@ -57,13 +57,13 @@ class App extends Component {
 
   }
 
-  updateInvisible = (paramIDs, updatedVisibleGraph) => {
+  updateInvisible = (paramIDs, updatedVisibleGraph, invisibleGraph) => {
     const invisibleSession = this.driver.session()
     invisibleSession
       .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
       .then(result => {
         const updatedInvisibleGraph = this.toGraph(result,
-          this.state.invisibleGraph.toJS())
+          invisibleGraph)
         updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph,
           updatedInvisibleGraph)
         this.setState({
@@ -72,10 +72,6 @@ class App extends Component {
         })
 
       })
-      // .catch(error => {
-      //   console.log(error)
-      // })
-      // .then(() => session.close())
   }
 
   handleCypherQueryTextChange = (event) => {
@@ -112,29 +108,51 @@ class App extends Component {
   }
 
   reconcileGraphs = (vGraph, iGraph) => {
-    console.log(Object.keys(vGraph.nodes).length)
-    console.log(Object.keys(vGraph.edges).length)
-    console.log(Object.keys(iGraph.nodes).length)
-    console.log(Object.keys(iGraph.edges).length)
+    console.log('before reconcile')
+    console.log('visible nodes: ' + Object.keys(vGraph.nodes).length)
+    console.log('visible edges: ' + Object.keys(vGraph.edges).length)
+    console.log('invisible nodes: ' + Object.keys(iGraph.nodes).length)
+    console.log('invisible edges: ' + Object.keys(iGraph.edges).length)
     Object.keys(iGraph.edges).forEach((key) => {
       if (Object.keys(vGraph.nodes).includes(iGraph.edges[key].source.toString()) &&
       Object.keys(vGraph.nodes).includes(iGraph.edges[key].target.toString())) {
         vGraph.edges[key] = iGraph.edges[key]
       }
     })
-    console.log(Object.keys(vGraph.nodes).length)
-    console.log(Object.keys(vGraph.edges).length)
+    console.log('after reconcile')
+    console.log('visible nodes: ' + Object.keys(vGraph.nodes).length)
+    console.log('visible edges: ' + Object.keys(vGraph.edges).length)
+    console.log('invisible nodes: ' + Object.keys(iGraph.nodes).length)
+    console.log('invisible edges: ' + Object.keys(iGraph.edges).length)
     return vGraph
+  }
+
+  mergeGraphs = (ids, vGraph, iGraph) => {
+    console.log('merge graphs')
+    ids.forEach((id) => {
+      vGraph.edges[id] = iGraph.edges[id]
+      vGraph.nodes[vGraph.edges[id].source.id] = iGraph.nodes[iGraph.edges[id].source.id] 
+      vGraph.nodes[vGraph.edges[id].target.id] = iGraph.nodes[iGraph.edges[id].target.id] 
+    })
+    console.log('reconcile after merge')
+    console.log('visible graph before')
+    console.log(this.state.visibleGraph.toJS())
+    console.log('visible graph after merge')
+    console.log(vGraph)
+    console.log('first reconcile')
+    let updatedVisibleGraph = this.reconcileGraphs(vGraph, iGraph)
+    console.log('update invisible')
+    this.updateInvisible(ids, updatedVisibleGraph, this.state.invisibleGraph.toJS())
+    console.log('second reconcile')
+    updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph, this.state.invisibleGraph.toJS())
+    console.log('visible graph after')
+    console.log(updatedVisibleGraph)
+    return updatedVisibleGraph
   }
 
   handleButtonClick = (ids) => {
     console.log('button clicked')
-    console.log(ids)
-    console.log(this.state.visibleGraph.toJS())
-    console.log(this.state.invisibleGraph.toJS())
-    let updatedVisibleGraph = this.updateInvisible(ids, this.state.visibleGraph.toJS(), this.state.invisibleGraph.toJS())
-    updatedVisibleGraph = this.reconcileGraphs(this.state.visibleGraph.toJS(), this.state.invisibleGraph.toJS())
-    console.log(updatedVisibleGraph)
+    const updatedVisibleGraph = this.mergeGraphs(ids, this.state.visibleGraph.toJS(), this.state.invisibleGraph.toJS())
     this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
   }
 
