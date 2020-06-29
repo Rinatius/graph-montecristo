@@ -7,6 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import neo4j from 'neo4j-driver'
 import Immutable from 'immutable'
 
+import Pagination from '@material-ui/lab/Pagination';
+
 class App extends Component {
 
     driver = neo4j.driver('bolt://neo4j.kloop.io:7687')
@@ -23,16 +25,16 @@ class App extends Component {
     }
     
     handleSearchClick = () => {
-    let query = "CALL db.index.fulltext.queryNodes(" + this.state.searchText + ") YIELD node RETURN node"
-    this.executeQuery(query)
+        let query = "CALL db.index.fulltext.queryNodes(" + this.state.searchText + ") YIELD node RETURN node"
+        this.executeQuery(query)
     }
 
     handleCypherQueryTextChange = (event) => {
-    this.setState({cypherQuery: event.target.value})
+      this.setState({cypherQuery: event.target.value})
     }
 
     handleSearchTextChange = (event) => {
-    this.setState({searchText: event.target.value})
+        this.setState({searchText: event.target.value})
     }
 
 
@@ -52,6 +54,7 @@ class App extends Component {
         />
         <Button variant="contained"
                 onClick={this.handleSearchClick}>Search</Button>
+        <Pagination count={11} defaultPage={6} boundaryCount={2} />
         </div>
     );
     }
