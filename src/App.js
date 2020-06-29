@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import './my-svg.svg'
 import GraphComponent from './components/GraphComponent'
 import Pagination from '@material-ui/lab/Pagination';
+import queryString from 'query-string'
 
 let listOfQueries = ["MATCH (n) RETURN n LIMIT 1", "MATCH (n) RETURN n LIMIT 2", "MATCH (n) RETURN n LIMIT 3", "MATCH (n) RETURN n LIMIT 4", "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n"]
 
@@ -14,6 +15,17 @@ class App extends Component {
     cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
     goClick: false,
     clearGraph: false
+  }
+
+  componentDidMount() { 
+    let urlQuery =  queryString.parse(window.location.search)
+    // fetch(urlQuery)
+    // .then((response) => {
+    //   return response.json();
+    // })
+    // .then((data) => {
+    //   console.log(data);
+    // });
   }
 
   handleCypherQueryTextChange = (event) => {
