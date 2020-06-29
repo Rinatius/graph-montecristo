@@ -21,8 +21,8 @@ class GraphComponent extends Component{
   }
 
   handleGoClick = () => {
-    this.executeQuery(this.state.cypherQuery)
-    // this.executeQuery(this.props.cypherQuery)
+    // this.executeQuery(this.state.cypherQuery)
+    this.executeQuery(this.props.cypherQuery)
   }
 
   executeQuery = (cypherQuery) => {
