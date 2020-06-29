@@ -6,6 +6,7 @@ import Immutable from 'immutable'
 
 import './my-svg.svg'
 import MGraph from "../MGraph/MGraph";
+import * as gh from './graphHelpers.js'
 
 class GraphComponent extends Component{
 
@@ -20,17 +21,16 @@ class GraphComponent extends Component{
   }
 
   handleGoClick = () => {
-    // this.executeQuery(this.state.cypherQuery)
-    this.executeQuery(this.props.cypherQuery)
+    this.executeQuery(this.state.cypherQuery)
+    // this.executeQuery(this.props.cypherQuery)
   }
-
 
   executeQuery = (cypherQuery) => {
     const session = this.driver.session()
     session
       .run(cypherQuery)
       .then(result => {
-        let updatedVisibleGraph = this.toGraph(result, this.state.visibleGraph.toJS())
+        let updatedVisibleGraph = gh.toGraph(result, this.state.visibleGraph.toJS())
         const paramIDs = Object.keys(updatedVisibleGraph.nodes).toString()
         this.updateInvisible(paramIDs, updatedVisibleGraph, this.state.invisibleGraph.toJS()) 
       })
@@ -46,9 +46,9 @@ class GraphComponent extends Component{
     invisibleSession
       .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
       .then(result => {
-        const updatedInvisibleGraph = this.toGraph(result,
+        const updatedInvisibleGraph = gh.toGraph(result,
           invisibleGraph)
-        updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph,
+        updatedVisibleGraph = gh.reconcileGraphs(updatedVisibleGraph,
           updatedInvisibleGraph)
         this.setState({
           visibleGraph: Immutable.fromJS(updatedVisibleGraph),
@@ -58,48 +58,15 @@ class GraphComponent extends Component{
       })
   }
 
-  toGraph = (result, graph) => {
-    result.records.forEach((records, i) => {
-      records.keys.forEach((key) => {
-        const nodge = records.get(key)
-        if (nodge.hasOwnProperty('start')) { //Check if it is edge
-          graph.edges[nodge.identity.low] = {
-            source: nodge.start.low,
-            target: nodge.end.low,
-            type: nodge.type,
-            properties: nodge.properties
-          }
-        } else {
-          graph.nodes[nodge.identity.low] = {
-            id: nodge.identity.low,
-            labels: nodge.labels,
-            properties: nodge.properties
-          }
-        }
-      })
-    })
-    return graph;
-  }
-
- reconcileGraphs = (vGraph, iGraph) => {
-    Object.keys(iGraph.edges).forEach((key) => {
-      if (Object.keys(vGraph.nodes).includes(iGraph.edges[key].source.toString()) &&
-      Object.keys(vGraph.nodes).includes(iGraph.edges[key].target.toString())) {
-        vGraph.edges[key] = iGraph.edges[key]
-      }
-    })
-    return vGraph
-  }
-
   mergeGraphs = (ids, vGraph, iGraph) => {
     ids.forEach((id) => {
       vGraph.edges[id] = iGraph.edges[id]
       vGraph.nodes[vGraph.edges[id].source.id] = iGraph.nodes[iGraph.edges[id].source.id] 
       vGraph.nodes[vGraph.edges[id].target.id] = iGraph.nodes[iGraph.edges[id].target.id] 
     })
-    let updatedVisibleGraph = this.reconcileGraphs(vGraph, iGraph)
+    let updatedVisibleGraph = gh.reconcileGraphs(vGraph, iGraph)
     this.updateInvisible(ids, updatedVisibleGraph, this.state.invisibleGraph.toJS())
-    updatedVisibleGraph = this.reconcileGraphs(updatedVisibleGraph, this.state.invisibleGraph.toJS())
+    updatedVisibleGraph = gh.reconcileGraphs(updatedVisibleGraph, this.state.invisibleGraph.toJS())
     return updatedVisibleGraph
   }
 
