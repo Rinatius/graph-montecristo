@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
 
 import neo4j from 'neo4j-driver'
 import Immutable from 'immutable'
@@ -13,16 +12,28 @@ class GraphComponent extends Component{
   driver = neo4j.driver('bolt://neo4j.kloop.io:7687')
 
   state = {
-    cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
-    data: {},
-    dataText: "",
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
     invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}})
   }
 
-  handleGoClick = () => {
-    // this.executeQuery(this.state.cypherQuery)
-    this.executeQuery(this.props.cypherQuery)
+  componentDidUpdate(prevProps) {
+    if (prevProps.isGoClick !== this.props.isGoClick) {
+      this.goClick(this.props.cypherQuery)
+      this.props.goClick()
+    }
+    if (prevProps.isClearGraph !== this.props.isClearGraph) {
+      this.clearGraphs()
+      this.props.clearClick()
+    }
+  }
+
+  clearGraphs = () => {
+    this.setState({visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
+                   invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}})})
+  }
+
+  goClick = (query) => {
+    this.executeQuery(query)
   }
 
   executeQuery = (cypherQuery) => {
@@ -85,8 +96,6 @@ class GraphComponent extends Component{
     }
     return(
       <div>
-        <Button variant="contained"
-                onClick={this.handleGoClick}>Go</Button>
         {graph}
       </div>
     )

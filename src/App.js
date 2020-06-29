@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import './my-svg.svg'
@@ -11,6 +12,8 @@ class App extends Component {
 
   state = {
     cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
+    goClick: false,
+    clearGraph: false
   }
 
   handleCypherQueryTextChange = (event) => {
@@ -25,6 +28,21 @@ class App extends Component {
     this.setState({cypherQuery: listOfQueries[value - 1]})
   }
 
+  handleGoClick = () => {
+    this.setState({goClick: true})
+  }
+
+  goClick = () => {
+    this.setState({goClick: false})
+  }
+
+  handleClearClick = () => {
+    this.setState({clearGraph: true})
+  }
+
+  clearClick = () => {
+    this.setState({clearGraph: false})
+  }
 
   render() {
     return(
@@ -34,8 +52,16 @@ class App extends Component {
                    value={this.state.cypherQuery}
                    onChange={this.handleCypherQueryTextChange}
         />
-        
-        <GraphComponent cypherQuery={this.state.cypherQuery}/>
+        <Button variant="contained"
+                onClick={this.handleGoClick}>Go</Button>
+        <Button variant="contained"
+                onClick={this.handleClearClick}>Clear</Button>
+        <GraphComponent 
+          cypherQuery={this.state.cypherQuery}
+          isGoClick={this.state.goClick}
+          goClick={this.goClick}
+          isClearGraph={this.state.clearGraph}
+          clearClick={this.clearClick}/>
         <Pagination count={listOfQueries.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
       </div>
     )
