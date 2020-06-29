@@ -1,5 +1,3 @@
-// HOC component for graph-montecristo
-
 import React, { Component } from 'react';
 import './App.css';
 
@@ -18,8 +16,46 @@ class App extends Component {
       searchText: "",
       data: {},
       dataText: "",
-      visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
-      invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}})
     }
 
+    handleGoClick = () => {
+        this.executeQuery(this.state.cypherQuery)
+    }
+    
+    handleSearchClick = () => {
+    let query = "CALL db.index.fulltext.queryNodes(" + this.state.searchText + ") YIELD node RETURN node"
+    this.executeQuery(query)
+    }
+
+    handleCypherQueryTextChange = (event) => {
+    this.setState({cypherQuery: event.target.value})
+    }
+
+    handleSearchTextChange = (event) => {
+    this.setState({searchText: event.target.value})
+    }
+
+
+    render() {
+    return (
+        <div className="App">
+        <TextField id="query"
+                    label="Query"
+                    value={this.state.cypherQuery}
+                    onChange={this.handleCypherQueryTextChange}
+        />
+        <Button variant="contained"
+                onClick={this.handleGoClick}>Go</Button>
+        <TextField id="search"
+                    label="Search"
+                    onChange={this.handleSearchTextChange}
+        />
+        <Button variant="contained"
+                onClick={this.handleSearchClick}>Search</Button>
+        </div>
+    );
+    }
 }
+
+export default App;
+    
