@@ -20,6 +20,7 @@ class App extends Component {
 
   state = {
     cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
+    searchText: "",
     data: {},
     dataText: "",
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
@@ -28,6 +29,11 @@ class App extends Component {
 
   handleGoClick = () => {
     this.executeQuery(this.state.cypherQuery)
+  }
+
+  handleSearchClick = () => {
+    let query = "CALL db.index.fulltext.queryNodes(" + this.state.searchText + ") YIELD node RETURN node"
+    this.executeQuery(query)
   }
 
   executeQuery = (cypherQuery) => {
@@ -74,6 +80,10 @@ class App extends Component {
 
   handleCypherQueryTextChange = (event) => {
     this.setState({cypherQuery: event.target.value})
+  }
+
+  handleSearchTextChange = (event) => {
+    this.setState({searchText: event.target.value})
   }
 
 
@@ -146,6 +156,12 @@ class App extends Component {
         />
         <Button variant="contained"
                 onClick={this.handleGoClick}>Go</Button>
+        <TextField id="search"
+                   label="Search"
+                   onChange={this.handleSearchTextChange}
+        />
+        <Button variant="contained"
+                onClick={this.handleSearchClick}>Search</Button>
         {graph}
       </div>
     );
