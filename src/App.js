@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import './my-svg.svg'
 import GraphComponent from './components/GraphComponent'
 import Pagination from '@material-ui/lab/Pagination';
+import Sidebar from './SideBar/SideBar';
 
 let listOfQueries = ["MATCH (n) RETURN n LIMIT 1", "MATCH (n) RETURN n LIMIT 2", "MATCH (n) RETURN n LIMIT 3", "MATCH (n) RETURN n LIMIT 4", "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n"]
 
@@ -29,11 +30,10 @@ class App extends Component {
   render() {
     return(
       <div className='App'>
-        <TextField id="query"
-                   label="Query"
-                   value={this.state.cypherQuery}
-                   onChange={this.handleCypherQueryTextChange}
-        />
+        <Sidebar 
+         value={this.state.cypherQuery}
+         onChange={this.handleCypherQueryTextChange}
+         cypherQuery={this.state.cypherQuery}/>
         
         <GraphComponent cypherQuery={this.state.cypherQuery}/>
         <Pagination count={listOfQueries.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
