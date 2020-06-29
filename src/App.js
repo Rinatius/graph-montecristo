@@ -25,7 +25,9 @@ class App extends Component {
   }
 
   handlePaginationChange = (event, value) => {
+    this.handleClearClick()
     this.setState({cypherQuery: listOfQueries[value - 1]})
+    this.handleGoClick()
   }
 
   handleGoClick = () => {
