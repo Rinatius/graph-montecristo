@@ -21,10 +21,13 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
-  Button: {
+  menuButton: {
       left: 0,
       position: 'fixed',
       margin: 8
+  },
+  Button: {
+    margin: 5
   },
   Query: {
       margin: 8
@@ -35,14 +38,11 @@ export default function Sidebar(props) {
 
   const classes = useStyles();
   const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
+    left: false
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    setState({ ...state, [anchor]: open });
+    setState({ ...state, [anchor]: !state.left });
   };
 
   const list = (anchor) => (
@@ -70,7 +70,12 @@ export default function Sidebar(props) {
       </List>
       <List>
       <div>
-        <Button variant="contained">Go</Button>
+        <Button variant="contained"
+                onClick={props.goButtonClicked}
+                className={classes.Button}>Go</Button>
+        <Button variant="contained"
+                onClick={toggleDrawer('left')}
+                className={classes.Button}>Close</Button>
       </div>
       </List>
     </div>
@@ -78,10 +83,10 @@ export default function Sidebar(props) {
 
   return (
     <div>
-      {['open'].map((anchor) => (
+      {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.Button}/></Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.menuButton}/></Button>
+          <Drawer variant='persistent' anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>
         </React.Fragment>

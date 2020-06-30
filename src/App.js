@@ -42,13 +42,17 @@ class App extends Component {
   }
 
   handlePaginationChange = (event, value) => {
+
     this.handleClearClick()
     this.setState({cypherQuery: this.state.listOfQueries[value - 1]})
     this.handleGoClick()
+
   }
 
   handleGoClick = () => {
-    this.setState({goClick: true})
+    this.setState({goClick: true});
+    console.log('go button clicked')
+    console.log('state goClicked ', this.state.goClick)
   }
 
   goClick = () => {
@@ -66,6 +70,11 @@ class App extends Component {
   render() {
     return(
       <div className='App'>
+        <Sidebar 
+         value={this.state.cypherQuery}
+         onChange={this.handleCypherQueryTextChange}
+         cypherQuery={this.state.cypherQuery}
+         goButtonClicked={this.handleGoClick}/>
         <TextField id="query"
                    label="Query"
                    value={this.state.cypherQuery}
@@ -81,12 +90,10 @@ class App extends Component {
           goClick={this.goClick}
           isClearGraph={this.state.clearGraph}
           clearClick={this.clearClick}/>
-        <Sidebar 
-         value={this.state.cypherQuery}
-         onChange={this.handleCypherQueryTextChange}
-         cypherQuery={this.state.cypherQuery}/>
         
-        <GraphComponent cypherQuery={this.state.cypherQuery}/>
+        
+        <GraphComponent cypherQuery={this.state.cypherQuery}
+                        goButtonClicked={this.state.goButtonClicked}/>
         <Pagination count={this.state.listOfQueries.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
       </div>
     )
