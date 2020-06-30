@@ -8,25 +8,29 @@ import Pagination from '@material-ui/lab/Pagination';
 import queryString from 'query-string'
 import Sidebar from './SideBar/SideBar';
 
-let listOfQueries = ["MATCH (n) RETURN n LIMIT 1", "MATCH (n) RETURN n LIMIT 2", "MATCH (n) RETURN n LIMIT 3", "MATCH (n) RETURN n LIMIT 4", "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n"]
 
 class App extends Component {
 
   state = {
     cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
     goClick: false,
-    clearGraph: false
+    clearGraph: false,
+    listOfQueries: [],
   }
 
   componentDidMount() { 
-    let urlQuery =  queryString.parse(window.location.search)
-    // fetch(urlQuery)
-    // .then((response) => {
-    //   return response.json();
-    // })
-    // .then((data) => {
-    //   console.log(data);
-    // });
+    let urlString =  queryString.parse(window.location.search, {decode: false})
+    let url = urlString.url + "&token=" + urlString.token
+    console.log("URL", url)
+    fetch(url)
+    .then((response) => {
+      console.log("RESPONSE", response)
+      return response.json();
+    })
+    .then((data) => {
+      console.log("DATA", data)
+      this.setState({listOfQueries: data.query})
+    });
   }
 
   handleCypherQueryTextChange = (event) => {
@@ -39,7 +43,7 @@ class App extends Component {
 
   handlePaginationChange = (event, value) => {
     this.handleClearClick()
-    this.setState({cypherQuery: listOfQueries[value - 1]})
+    this.setState({cypherQuery: this.state.listOfQueries[value - 1]})
     this.handleGoClick()
   }
 
@@ -83,7 +87,7 @@ class App extends Component {
          cypherQuery={this.state.cypherQuery}/>
         
         <GraphComponent cypherQuery={this.state.cypherQuery}/>
-        <Pagination count={listOfQueries.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
+        <Pagination count={this.state.listOfQueries.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
       </div>
     )
   }
