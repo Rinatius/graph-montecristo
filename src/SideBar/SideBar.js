@@ -13,6 +13,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import TextField from '@material-ui/core/TextField';
 import * as gh from '../components/graphHelpers.js'
+import CancelIcon from '@material-ui/icons/Cancel';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 const useStyles = makeStyles({
   list: {
@@ -24,10 +26,13 @@ const useStyles = makeStyles({
   menuButton: {
       left: 0,
       position: 'fixed',
-      margin: 8
+      margin: 20
   },
   Button: {
     margin: 5
+  },
+  GoButton: {
+    background: '#A5D6A7'
   },
   Query: {
       margin: 8
@@ -55,7 +60,12 @@ export default function Sidebar(props) {
         {['Enter your query below'].map((text, index) => (
           <ListItem key={text}>
             <ListItemText primary={text} />
+            <CancelIcon
+          fontSize="medium"
+          onClick={toggleDrawer('left')}
+          className={classes.Button}/>
           </ListItem>
+          
         ))}
       </List>
       <List>
@@ -71,11 +81,10 @@ export default function Sidebar(props) {
       <List>
       <div>
         <Button variant="contained"
+                className={classes.GoButton}
                 onClick={props.goButtonClicked}
-                className={classes.Button}>Go</Button>
-        <Button variant="contained"
-                onClick={toggleDrawer('left')}
-                className={classes.Button}>Close</Button>
+                startIcon={<PlayArrowIcon />}>Run Query</Button>
+        
       </div>
       </List>
     </div>
@@ -85,7 +94,7 @@ export default function Sidebar(props) {
     <div>
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.menuButton}/></Button>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.menuButton} fontSize='large'/></Button>
           <Drawer variant='persistent' anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>
