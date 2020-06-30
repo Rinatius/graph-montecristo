@@ -23,7 +23,7 @@ class App extends Component {
     let urlString =  queryString.parse(window.location.search, {decode: false, arrayFormat: 'comma'})
     let query = ''
     if (urlString.nodes) {
-      query = "MATCH (n) where id(n) in [" + urlString.nodes.join() + "] return n"
+      query = "MATCH (n) where id(n) in [" + (urlString.nodes.length > 1 ? urlString.nodes.join() : urlString.nodes) + "] return n"
       console.log("NODES", query)
       this.setState({cypherQuery: query})
       this.handleGoClick()
