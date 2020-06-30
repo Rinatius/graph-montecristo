@@ -94,7 +94,7 @@ export default function Sidebar(props) {
     <div>
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.menuButton} fontSize='large'/></Button>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.menuButton}/></Button>
           <Drawer variant='persistent' anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>
