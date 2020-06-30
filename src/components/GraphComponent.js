@@ -72,8 +72,8 @@ class GraphComponent extends Component{
   mergeGraphs = (ids, vGraph, iGraph) => {
     ids.forEach((id) => {
       vGraph.edges[id] = iGraph.edges[id]
-      vGraph.nodes[vGraph.edges[id].source.id] = iGraph.nodes[iGraph.edges[id].source.id] 
-      vGraph.nodes[vGraph.edges[id].target.id] = iGraph.nodes[iGraph.edges[id].target.id] 
+      vGraph.nodes[vGraph.edges[id].source] = iGraph.nodes[iGraph.edges[id].source] 
+      vGraph.nodes[vGraph.edges[id].target] = iGraph.nodes[iGraph.edges[id].target] 
     })
     let updatedVisibleGraph = gh.reconcileGraphs(vGraph, iGraph)
     this.updateInvisible(ids, updatedVisibleGraph, this.state.invisibleGraph.toJS())
