@@ -15,22 +15,24 @@ class App extends Component {
     cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
     goClick: false,
     clearGraph: false,
-    listOfQueries: [],
+    listOfNodes: [],
+    showPagination: false
   }
 
   componentDidMount() { 
-    let urlString =  queryString.parse(window.location.search, {decode: false})
-    let url = urlString.url + "&token=" + urlString.token
-    console.log("URL", url)
-    fetch(url)
-    .then((response) => {
-      console.log("RESPONSE", response)
-      return response.json();
-    })
-    .then((data) => {
-      console.log("DATA", data)
-      this.setState({listOfQueries: data.query})
-    });
+    let urlString =  queryString.parse(window.location.search, {decode: false, arrayFormat: 'comma'})
+    let query = ''
+    if (urlString.nodes) {
+      query = "MATCH (n) where id(n) in [" + urlString.nodes.join() + "] return n"
+      console.log("NODES", query)
+      this.setState({cypherQuery: query})
+      this.handleGoClick()
+    }
+    else if (urlString.url) {
+      let url = urlString.url + "&token=" + urlString.token
+      console.log("URL", url)
+      this.fetchData(url)
+    }
   }
 
   handleCypherQueryTextChange = (event) => {
@@ -43,8 +45,24 @@ class App extends Component {
 
   handlePaginationChange = (event, value) => {
     this.handleClearClick()
-    this.setState({cypherQuery: this.state.listOfQueries[value - 1]})
+    let nodes = this.state.listOfNodes[value - 1]
+    let query = "MATCH (n) where id(n) in [" + nodes.join() + "] return n"
+    this.setState({cypherQuery: query})
     this.handleGoClick()
+  }
+
+  fetchData = (url) => {
+    fetch(url)
+      .then((response) => {
+        console.log("RESPONSE", response)
+        return response.json();
+      })
+      .then((data) => {
+        console.log("DATA", Object.values(data))
+        let query = "MATCH (n) where id(n) in [" + Object.values(data.query)[0].join() + "] return n"
+        this.setState({listOfNodes: Object.values(data.query), showPagination: true, cypherQuery: query})
+        this.handleGoClick()
+      });
   }
 
   handleGoClick = () => {
@@ -85,9 +103,7 @@ class App extends Component {
          value={this.state.cypherQuery}
          onChange={this.handleCypherQueryTextChange}
          cypherQuery={this.state.cypherQuery}/>
-        
-        <GraphComponent cypherQuery={this.state.cypherQuery}/>
-        <Pagination count={this.state.listOfQueries.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
+        {this.state.showPagination? <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} showFirstButton showLastButton /> : null}
       </div>
     )
   }
