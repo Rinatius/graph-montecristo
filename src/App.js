@@ -8,6 +8,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import queryString from 'query-string'
 import Sidebar from './SideBar/SideBar';
 
+const axios = require('axios').default;
+
 
 class App extends Component {
 
@@ -20,18 +22,18 @@ class App extends Component {
   }
 
   componentDidMount() { 
-    let urlString =  queryString.parse(window.location.search, {decode: false, arrayFormat: 'comma'})
+    let urlString =  queryString.parse(window.location.search, {decode: false})
     let query = ''
+    console.log("URL STRING", urlString)
     if (urlString.nodes) {
-      query = "MATCH (n) where id(n) in [" + (urlString.nodes.length > 1 ? urlString.nodes.join() : urlString.nodes) + "] return n"
+      query = "MATCH (n) where id(n) in [" + urlString.nodes + "] return n"
       console.log("NODES", query)
       this.setState({cypherQuery: query})
-      this.handleGoClick()
+      // this.handleGoClick()
     }
     else if (urlString.url) {
-      let url = urlString.url + "&token=" + urlString.token
-      console.log("URL", url)
-      this.fetchData(url)
+      console.log("urlString", urlString)
+      this.fetchData(urlString)
     }
   }
 
@@ -53,18 +55,23 @@ class App extends Component {
 
   }
 
-  fetchData = (url) => {
-    fetch(url)
-      .then((response) => {
-        console.log("RESPONSE", response)
-        return response.json();
-      })
-      .then((data) => {
-        console.log("DATA", Object.values(data))
-        let query = "MATCH (n) where id(n) in [" + Object.values(data.query)[0].join() + "] return n"
-        this.setState({listOfNodes: Object.values(data.query), showPagination: true, cypherQuery: query})
-        this.handleGoClick()
-      });
+  fetchData = (urlString) => {
+    axios.get(urlString.url, {
+      params: {
+        token: urlString.token
+      }
+    })
+    .then(response => {
+      // handle success
+      console.log(response);
+      let query = "MATCH (n) where id(n) in [" + response.data[0].join() + "] return n"
+      console.log(query)
+      this.setState({listOfNodes: response.data, showPagination: true, cypherQuery: query})
+    })
+    .catch(error => {
+      // handle error
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    })
   }
 
   handleGoClick = () => {
