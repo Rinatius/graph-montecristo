@@ -6,6 +6,7 @@ import FounderCard from "../Cards/FounderCard";
 import LotCard from "../Cards/LotCard";
 import ParticipantCard from "../Cards/ParticipantCard";
 import {Graph} from "react-d3-graph";
+import Card from '../Cards/Card'
 
 const displayGraph = (graph) => {
   const dispGraph = {
@@ -35,30 +36,8 @@ const MGraph = (props) => {
       color: "lightgreen",
       highlightStrokeColor: "blue",
       viewGenerator: (n) => {
-        console.log(n)
-        if (n.labels.includes("KgMinjust")) {
-          console.log("KgMinjust")
-          return <CompanyCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />        
-       
-        } else if(n.labels.includes("KgMinjustParticipants")) {
-          console.log("KgMinjustParticipants")
-          return <FounderCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
-        
-        } else if(n.labels.includes("HeadNameSur")) {
-          console.log("HeadNameSur")
-          return <DirectorCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
-  
-        } else if(n.labels.includes("KgProcurementParticipants")) {
-          console.log("KgProcurementParticipants")
-          return <ParticipantCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
-  
-        } else if(n.labels.includes("KgProcurementLots")) {
-          console.log("KgProcurementLots")
-          return <LotCard node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
-  
-        } else {
-          return <GenericCard uzel={n}/>
-        }
+        console.log("THIS IS N", n)
+        return <Card node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
       },
       "link": {
         "color": "#d3d3d3",
