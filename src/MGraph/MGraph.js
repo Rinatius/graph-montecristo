@@ -27,9 +27,9 @@ const MGraph = (props) => {
   console.log(props.invisibleGraph.toJS()) 
 
   const myConfig = {
-
-    height:800,
-    width:1200,
+    height:1080,
+    width:1920,
+    staticGraphWithDragAndDrop: true,
     nodeHighlightBehavior: true,
     node: {
       color: "lightgreen",
