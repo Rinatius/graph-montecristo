@@ -36,14 +36,13 @@ const MGraph = (props) => {
       color: "lightgreen",
       highlightStrokeColor: "blue",
       viewGenerator: (n) => {
-        console.log("THIS IS N", n)
         return <Card 
                   node={n}
                   vGraph={props.visibleGraph} 
                   iGraph={props.invisibleGraph} 
                   onButtonClick={props.onButtonClick} />
       },
-      size: 4500,
+      size: 3300,
     }
     ,
     "d3": {

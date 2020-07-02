@@ -24,7 +24,8 @@ import cardConfig from '../config'
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 240,
-      textAlign: "left"
+      textAlign: "left",
+      height : 320
     },
     media: {
       height: 0,
@@ -46,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     divider: {
       paddingTop: '5px',
       paddingBottom: '5px'
+    },
+    cardContent: {
+      paddingTop: 0,
+      paddingBottom: 0
     }
   }));
 
@@ -84,9 +89,9 @@ const useStyles = makeStyles((theme) => ({
               <MoreVertIcon />
             </IconButton>
           }
-          subheader={subheader}
+          subheader={<Typography>{subheader}</Typography>} 
         />
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <NestedProperties node={props.node}/>
           <div className="divider">
             <Divider />

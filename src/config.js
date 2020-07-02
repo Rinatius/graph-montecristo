@@ -12,7 +12,7 @@ const cardConfig = {
         subHeaderText: 'Минюст',
         contentTextParam: 'name_ru',
         properties: ['name_ru', 'inn'],
-        // links: ['participant', 'director']
+        links: ['SAME_INN', 'DIRECTOR']
     },
     KgMinjustParticipant: {
         label: 'KgMinjustParticipant',
@@ -21,7 +21,8 @@ const cardConfig = {
         subHeaderUrlParam: 'org_url',
         subHeaderText: 'Минюст',
         contentTextParam: 'name',
-        properties: ['name']
+        properties: ['name'],
+        links: ['PARTICIPATED_IN', 'SAME_INN']
     },
     HeadNameSur: {
         label: 'HeadNameSur',
@@ -30,7 +31,8 @@ const cardConfig = {
         subHeaderUrlParam: '',
         subHeaderText: 'Минюст',
         contentTextParam: 'inn',
-        properties: ['inn']
+        properties: ['inn'],
+        links: ['PARTICIPATED_IN', 'SAME_INN']
     },
     KgProcurementParticipants: {
         label: 'KgProcurementParticipants',

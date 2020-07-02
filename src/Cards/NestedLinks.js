@@ -16,16 +16,20 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 
 import translate from './utils/translate'
+import cardConfig from '../config'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    padding: '1px'
+    padding: '1px',
   },
   nested: {
     paddingLeft: theme.spacing(4),
     padding: '1px'
   },
+  listItemIcon: {
+    minWidth: 'auto'
+  }
 }));
 
 const NestedLinks = (props) => {
@@ -36,12 +40,9 @@ const NestedLinks = (props) => {
     setOpen(!open);
   };
 
-  console.log('NESTED LINKS')
   // console.log(props.node)
   // console.log(props.vGraph.toJS())
   // console.log(props.iGraph.toJS()) 
-  
-  console.log(Object.keys(props.iGraph.toJS().edges)) 
 
   const vNodes = props.vGraph.toJS().nodes
   const vEdges = props.vGraph.toJS().edges
@@ -49,7 +50,6 @@ const NestedLinks = (props) => {
   const iNodes = props.iGraph.toJS().nodes
   const iEdges = props.iGraph.toJS().edges
   
-  console.log(props.node.id)
 
   let listOfRelationships = Object.keys(iEdges).map((key) => {
     if (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString()){
@@ -73,10 +73,7 @@ const NestedLinks = (props) => {
   }, {})
  
   const getKeyRelationshipIds = (type) => {
-    console.log("getKeyRelationshipIds")
-   
     let keys = Object.keys(iEdges).map((key) => {
-     
       if ((iEdges[key].type == type) && (props.node.id.toString() == iEdges[key].source.toString() || props.node.id.toString() == iEdges[key].target.toString())){
         return key
       }
@@ -89,45 +86,32 @@ const NestedLinks = (props) => {
     return keys
   };
 
+  const label = props.node.labels[0]
+
+  let listOfLinks = Object.keys(listOfRelationships).map((key) => {
+    if (cardConfig[label] 
+        && cardConfig[label].links 
+        && cardConfig[label].links.includes(key)) {
+      const keys = getKeyRelationshipIds(key)
+          
+      return(
+        <ListItem style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
+          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
+          <ListItemIcon className={classes.listItemIcon}>
+            <BubbleChartIcon />
+          </ListItemIcon>
+        </ListItem>)
+    }
+  })
+
 
   return (
     <List
       component="nav"
       aria-labelledby="nested-list-subheader"
-      // subheader={
-      //   <ListSubheader component="div" id="nested-list-subheader">
-      //     Nested List Items
-      //   </ListSubheader>
-      // }
       className={classes.root}
     >
-
-      {Object.keys(listOfRelationships).map((key) => {
-        const keys = getKeyRelationshipIds(key)
-        return (<ListItem style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
-          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
-          {/* <ListItemIcon>
-            <BubbleChartIcon />
-          </ListItemIcon> */}
-        </ListItem>)
-      })}
-      <ListItem button onClick={handleClick}>
-        {/*<ListItemIcon>*/}
-        {/*  <InboxIcon />*/}
-        {/*</ListItemIcon>*/}
-        <ListItemText primary="Директор" primaryTypographyProps={{variant:"body2"}} />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            {/*<ListItemIcon>*/}
-            {/*  <StarBorder />*/}
-            {/*</ListItemIcon>*/}
-            <ListItemText primary="Такойто Токтотович" primaryTypographyProps={{variant:"body2"}} />
-          </ListItem>
-        </List>
-      </Collapse>
+      {listOfLinks}
     </List>
   );
 }
