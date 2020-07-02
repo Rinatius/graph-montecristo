@@ -12,7 +12,7 @@ const cardConfig = {
         subHeaderText: 'Минюст',
         contentTextParam: 'name_ru',
         properties: ['name_ru', 'inn'],
-        // links: ['participant', 'director']
+        links: ['CONTROLS', 'DIRECTOR', 'SAME_INN']
     },
     KgMinjustParticipant: {
         label: 'KgMinjustParticipant',
@@ -21,7 +21,8 @@ const cardConfig = {
         subHeaderUrlParam: 'org_url',
         subHeaderText: 'Минюст',
         contentTextParam: 'name',
-        properties: ['name']
+        properties: ['name'],
+        links: ['CONTROLS', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID']
     },
     HeadNameSur: {
         label: 'HeadNameSur',
@@ -30,7 +31,8 @@ const cardConfig = {
         subHeaderUrlParam: '',
         subHeaderText: 'Минюст',
         contentTextParam: 'inn',
-        properties: ['inn']
+        properties: ['inn'],
+        links: ['DIRECTOR', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID']
     },
     KgProcurementParticipants: {
         label: 'KgProcurementParticipants',
@@ -39,7 +41,8 @@ const cardConfig = {
         subHeaderUrlParam: '',
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'inn',
-        properties: ['inn']
+        properties: ['inn'],
+        links: ['PARTICIPATED_IN', 'PARTICIPATED_IN', 'NAME_SAKE_INDIVIDUAL']
     }, 
     KgProcurementLots: {
         label: 'KgProcurementLots',
@@ -48,7 +51,8 @@ const cardConfig = {
         subHeaderUrlParam: 'tender_url',
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'lot_name',
-        properties: ['lot_name']
+        properties: ['lot_name'],
+        links: ['PARTICIPATED_IN', 'INCLUDES_LOTS']
     }
 }
 
