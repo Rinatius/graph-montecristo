@@ -7,7 +7,7 @@ const cardConfig = {
     KgMinjust: {
         label: 'KgMinjust',
         style: {backgroundColor: 'red'},
-        icon: <BusinessIcon/>,
+        icon: <BusinessIcon  style={{ fontSize: 30 }}/>,
         subHeaderUrlParam: 'url',
         subHeaderText: 'Минюст',
         contentTextParam: 'name_ru',
@@ -17,7 +17,7 @@ const cardConfig = {
     KgMinjustParticipant: {
         label: 'KgMinjustParticipant',
         style: {backgroundColor: 'red'},
-        icon: <AccountCircleIcon/>,
+        icon: <AccountCircleIcon style={{ fontSize: 30 }}/>,
         subHeaderUrlParam: 'org_url',
         subHeaderText: 'Минюст',
         contentTextParam: 'name',
@@ -27,7 +27,7 @@ const cardConfig = {
     HeadNameSur: {
         label: 'HeadNameSur',
         style: {backgroundColor: 'red'},
-        icon: <AccountCircleIcon/>,
+        icon: <AccountCircleIcon  style={{ fontSize: 30 }}/>,
         subHeaderUrlParam: '',
         subHeaderText: 'Минюст',
         contentTextParam: 'inn',
@@ -37,7 +37,7 @@ const cardConfig = {
     KgProcurementParticipants: {
         label: 'KgProcurementParticipants',
         style: {backgroundColor: 'blue'},
-        icon: <BusinessIcon/>,
+        icon: <BusinessIcon style={{ fontSize: 30 }}/>,
         subHeaderUrlParam: '',
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'inn',
@@ -47,7 +47,7 @@ const cardConfig = {
     KgProcurementLots: {
         label: 'KgProcurementLots',
         style: {backgroundColor: 'blue'},
-        icon: <GavelIcon/>,
+        icon: <GavelIcon style={{ fontSize: 30 }}/>,
         subHeaderUrlParam: 'tender_url',
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'lot_name',

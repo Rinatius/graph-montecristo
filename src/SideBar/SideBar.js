@@ -61,7 +61,7 @@ export default function Sidebar(props) {
           <ListItem key={text}>
             <ListItemText primary={text} />
             <CancelIcon
-          fontSize="medium"
+          fontSize="default"
           onClick={toggleDrawer('left')}
           className={classes.Button}/>
           </ListItem>

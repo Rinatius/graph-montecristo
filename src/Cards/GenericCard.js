@@ -16,10 +16,12 @@ import lotParticipant from './Icons/participant.png'
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 240,
+    maxWidth: 50,
+    maxHeight: 50
+
   },
   media: {
-    height: 140,
+   height: 40,
   },
 });
 

@@ -7,25 +7,43 @@ import LotCard from "../Cards/LotCard";
 import ParticipantCard from "../Cards/ParticipantCard";
 import {Graph} from "react-d3-graph";
 import Card from '../Cards/Card'
+import CardConfig from '../config'
+
+
+
 
 const displayGraph = (graph) => {
+  //console.log('GRAPH.NODES IN DISPLAY GRAPH ', Object.values(graph.nodes))
   const dispGraph = {
     nodes: Object.values(graph.nodes),
     links: Object.values(graph.edges),
   }
-  // dispGraph.nodes = dispGraph.nodes.map((node) => {
-  //   //node.viewGenerator = (n) => {return <GenericCard uzel={n}/>}
-  //   //node.size = 3000
-  //   return node
-  // })
+  const card_nodes_ids = [9350, 18766, 371947]
+  dispGraph.nodes = dispGraph.nodes.map((node) => {
+
+    // if node.id is in array, apply viewGenerator
+
+    console.log("NODE: ", )
+
+    if (card_nodes_ids.includes(node.id)) { 
+     node.size = 3000
+     //console.log("CARD NODE ", node)
+     return node
+    }
+    // else return SVG icon
+
+    else {
+      node.svg = CardConfig[node.labels[0]].icon
+      node.viewGenerator = () => {console.log("HERE", node.svg); return node.svg}
+      node.size = 900
+      return node
+    }
+   })
+  console.log('DisGraph ', dispGraph) 
   return dispGraph
 };
 
 const MGraph = (props) => {
-  console.log('MGRAPH')
-  console.log(props)
-  console.log(props.visibleGraph.toJS())
-  console.log(props.invisibleGraph.toJS()) 
 
   const myConfig = {
     height:1080,
@@ -67,3 +85,4 @@ const areEqual = (prevProps, nextProps) => {
 }
 
 export default React.memo(MGraph, areEqual);
+
