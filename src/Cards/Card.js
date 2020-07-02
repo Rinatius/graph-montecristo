@@ -18,6 +18,7 @@ import Divider from '@material-ui/core/Divider'
 
 import NestedLinks from './NestedLinks'
 import shorten from './utils/shorten'
+import NestedProperties from './NestedProperties'
 import cardConfig from '../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -59,13 +60,8 @@ const useStyles = makeStyles((theme) => ({
     let style = {}
     let avatar = ''
     let subheader = ''
-    let content = ''
-    console.log(Object.keys(cardConfig))
-    console.log(props.node.labels[0])
     if (Object.keys(cardConfig).includes(props.node.labels[0])) {
       const label = props.node.labels[0]
-      console.log(props.node)
-      console.log(cardConfig[label])
       style = cardConfig[label].style 
       avatar = cardConfig[label].icon 
       subheader =
@@ -73,12 +69,6 @@ const useStyles = makeStyles((theme) => ({
           href={props.node.properties[cardConfig[label].subHeaderUrlParam]} 
           target="_blank">{cardConfig[label].subHeaderText}
         </a>
-      content = (
-      <Typography variant="body2" color="textPrimary" component="p">
-          { props.node.properties[cardConfig[label].contentTextParam] }
-      </Typography>
-      )
-
     }
   
     return (
@@ -97,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
           subheader={subheader}
         />
         <CardContent>
-          {content}
+          <NestedProperties node={props.node}/>
           <div className="divider">
             <Divider />
           </div>
