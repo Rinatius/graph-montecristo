@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -15,11 +14,10 @@ import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import BusinessIcon from '@material-ui/icons/Business';
-import GavelIcon from '@material-ui/icons/Gavel';
 
 import NestedLinks from './NestedLinks'
 import shorten from './utils/shorten'
+import cardConfig from '../config'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,61 +54,25 @@ const useStyles = makeStyles((theme) => ({
     let avatar = ''
     let subheader = ''
     let content = ''
+    console.log(Object.keys(cardConfig))
+    console.log(props.node.labels[0])
+    if (Object.keys(cardConfig).includes(props.node.labels[0])) {
+      const label = props.node.labels[0]
+      console.log(props.node)
+      console.log(cardConfig[label])
+      style = cardConfig[label].style 
+      avatar = cardConfig[label].icon 
+      subheader =
+        <a 
+          href={props.node.properties[cardConfig[label].subHeaderUrlParam]} 
+          target="_blank">{cardConfig[label].subHeaderText}
+        </a>
+      content = (
+      <Typography variant="body2" color="textPrimary" component="p">
+          { props.node.properties[cardConfig[label].contentTextParam] }
+      </Typography>
+      )
 
-    if (props.node.labels.includes("KgMinjust")) {
-        console.log("KgMinjust")
-        style = {backgroundColor: 'red',}
-        avatar = <BusinessIcon />
-        subheader=<a href={props.node.properties.url} target="_blank">Минюст</a>
-        content = (
-        <Typography variant="body2" color="textPrimary" component="p">
-            { shorten(props.node.properties.name_ru) }
-        </Typography>
-        )
-        
-    } else if(props.node.labels.includes("KgMinjustParticipants")) {
-        style = {backgroundColor: 'red',}
-        avatar = <AccountCircleIcon />
-        subheader = <a href={props.node.properties.org_url} target="_blank">Минюст</a>
-        content = (
-        <Typography variant="body2" color="textPrimary" component="p">
-            { shorten(props.node.properties.name) }
-        </Typography>
-        )
-        
-    } else if(props.node.labels.includes("HeadNameSur")) {
-        style = {backgroundColor: 'red',} 
-        avatar = <AccountCircleIcon />
-        subheader= <a href={props.node.properties.url} target="_blank">Минюст</a>
-        content = (
-        <Typography variant="body2" color="textPrimary" component="p">
-            { shorten(props.node.properties.head_name_sur) }
-        </Typography>)
-
-    } else if(props.node.labels.includes("KgProcurementParticipants")) {
-        console.log("KgProcurementParticipants")
-        style = {backgroundColor: 'blue',}
-        avatar = <BusinessIcon />
-        subheader= <a href={""} target="_blank">Гос. закупки</a>
-        content = (
-        <Typography variant="body2" color="textPrimary" component="p">
-            {shorten(props.node.properties.name)}<br></br>
-            ИНН: {props.node.properties.inn.slice(0, 30) }
-        </Typography>
-        )
-
-    } else if(props.node.labels.includes("KgProcurementLots")) {
-        console.log("KgProcurementLots")
-        style = {backgroundColor: 'blue',}
-        avatar = <GavelIcon />
-        subheader=<a href={props.node.properties.tender_url} target="_blank">Гос. закупки</a>
-        content = (
-        <Typography variant="body2" color="textPrimary" component="p">
-            {shorten(props.node.properties.lot_name)}<br></br>
-            Сумма лота: {props.node.properties.lot_sum_int} <br></br>
-            Класс лота: {props.node.properties.lot_class }
-        </Typography>
-        )
     }
   
     return (

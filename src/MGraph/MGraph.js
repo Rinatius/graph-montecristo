@@ -37,7 +37,11 @@ const MGraph = (props) => {
       highlightStrokeColor: "blue",
       viewGenerator: (n) => {
         console.log("THIS IS N", n)
-        return <Card node={n} vGraph={props.visibleGraph} iGraph={props.invisibleGraph} onButtonClick={props.onButtonClick} />
+        return <Card 
+                  node={n}
+                  vGraph={props.visibleGraph} 
+                  iGraph={props.invisibleGraph} 
+                  onButtonClick={props.onButtonClick} />
       },
       "link": {
         "color": "#d3d3d3",
