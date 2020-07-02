@@ -19,12 +19,12 @@ import translate from './utils/translate'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+    padding: '1px'
   },
   nested: {
     paddingLeft: theme.spacing(4),
+    padding: '1px'
   },
 }));
 
@@ -104,18 +104,18 @@ const NestedLinks = (props) => {
 
       {Object.keys(listOfRelationships).map((key) => {
         const keys = getKeyRelationshipIds(key)
-        return (<ListItem button onClick={() => props.onButtonClick(keys)}>          
-          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'}  />
-          <ListItemIcon>
+        return (<ListItem style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
+          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
+          {/* <ListItemIcon>
             <BubbleChartIcon />
-          </ListItemIcon>
+          </ListItemIcon> */}
         </ListItem>)
       })}
       <ListItem button onClick={handleClick}>
         {/*<ListItemIcon>*/}
         {/*  <InboxIcon />*/}
         {/*</ListItemIcon>*/}
-        <ListItemText primary="Директор" />
+        <ListItemText primary="Директор" primaryTypographyProps={{variant:"body2"}} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -124,7 +124,7 @@ const NestedLinks = (props) => {
             {/*<ListItemIcon>*/}
             {/*  <StarBorder />*/}
             {/*</ListItemIcon>*/}
-            <ListItemText primary="Такойто Токтотович" />
+            <ListItemText primary="Такойто Токтотович" primaryTypographyProps={{variant:"body2"}} />
           </ListItem>
         </List>
       </Collapse>

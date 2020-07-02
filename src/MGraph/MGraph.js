@@ -43,24 +43,7 @@ const MGraph = (props) => {
                   iGraph={props.invisibleGraph} 
                   onButtonClick={props.onButtonClick} />
       },
-      "link": {
-        "color": "#d3d3d3",
-        "fontColor": "black",
-        "fontSize": 8,
-        "fontWeight": "normal",
-        "highlightColor": "SAME",
-        "highlightFontSize": 8,
-        "highlightFontWeight": "normal",
-        "labelProperty": "label",
-        "mouseCursor": "pointer",
-        "opacity": 1,
-        "renderLabel": false,
-        "semanticStrokeWidth": false,
-        "strokeWidth": 1.5,
-        "markerHeight": 6,
-        "markerWidth": 6
-      },
-      size: 4000
+      size: 4500,
     }
     ,
     "d3": {

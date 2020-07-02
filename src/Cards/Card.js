@@ -14,6 +14,7 @@ import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Divider from '@material-ui/core/Divider'
 
 import NestedLinks from './NestedLinks'
 import shorten from './utils/shorten'
@@ -21,11 +22,12 @@ import cardConfig from '../config'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: 180,
+      maxWidth: 240,
+      textAlign: "left"
     },
     media: {
       height: 0,
-      paddingTop: '56.25%', // 16:9
+      // paddingTop: '56.25%', // 16:9
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -40,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: red[500],
     },
+    divider: {
+      paddingTop: '5px',
+      paddingBottom: '5px'
+    }
   }));
 
   const RecipeReviewCard = (props) => {
@@ -90,42 +96,17 @@ const useStyles = makeStyles((theme) => ({
           }
           subheader={subheader}
         />
-        {/*<CardMedia*/}
-        {/*  className={classes.media}*/}
-        {/*  image="/static/images/cards/paella.jpg"*/}
-        {/*  title="Paella dish"*/}
-        {/*/>*/}
         <CardContent>
           {content}
+          <div className="divider">
+            <Divider />
+          </div>
           <NestedLinks
             node={props.node}
             vGraph={props.vGraph}
             iGraph={props.iGraph}
             onButtonClick={props.onButtonClick}  />
         </CardContent>
-        <CardActions disableSpacing>
-          {/*<IconButton aria-label="add to favorites">*/}
-          {/*  <FavoriteIcon />*/}
-          {/*</IconButton>*/}
-          {/*<IconButton aria-label="share">*/}
-          {/*  <ShareIcon />*/}
-          {/*</IconButton>*/}
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            {JSON.stringify(props.node.properties, null, 2)}
-          </CardContent>
-        </Collapse>
       </Card>
     );
   }
