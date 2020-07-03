@@ -1,18 +1,7 @@
 import React from "react";
-import GenericCard from "../Cards/GenericCard";
-import CompanyCard from "../Cards/CompanyCard";
-import DirectorCard from "../Cards/DirectorCard";
-import FounderCard from "../Cards/FounderCard";
-import LotCard from "../Cards/LotCard";
-import ParticipantCard from "../Cards/ParticipantCard";
 import {Graph} from "react-d3-graph";
-import Card from '../Cards/Card'
-import CardConfig from '../config'
-//import business from '../Cards/Icons/businessIcon.svg'
-
-import { ReactComponent as business } from '../Cards/Icons/businessIcon.svg';
-
-
+import Card from '../Cards/Card';
+import CardConfig from '../config';
 
 
 const displayGraph = (props) => {
@@ -28,16 +17,16 @@ const displayGraph = (props) => {
 
     if (card_nodes_ids.includes(node.id)) { 
      node.size = 3000
-     
+     node.renderLabel = true
+     node.label = CardConfig[node.labels[0]].contentTextParam
      node.viewGenerator = (n) => {
       return <Card 
                 node={n}
                 vGraph={props.visibleGraph} 
                 iGraph={props.invisibleGraph} 
                 onButtonClick={props.onButtonClick} />
-    }
+    }}
 
-    }
     // else return SVG icon
 
     else {
@@ -45,15 +34,11 @@ const displayGraph = (props) => {
       console.log("SVG ", node)
       node.size = 600
       node.renderLabel = true
-      node.fontWeight = 'bolder'
-      node.labelProperty = CardConfig[node.labels[0]].contentTextParam
-      node.fontSize = 900
-      console.log("RENDER LABEL SVG", node.renderLabel)
+      node.label = CardConfig[node.labels[0]].contentTextParam
       
     }
     return node
-   })
-  console.log('DisGraph ', dispGraph) 
+   }) 
   return dispGraph
 };
 
@@ -66,9 +51,10 @@ const MGraph = (props) => {
     nodeHighlightBehavior: true,
     node: {
       color: "lightgreen",
+      labelProperty: 'label',
       highlightStrokeColor: "blue",
       size: 3300,
-      fontSize: 12
+      fontSize: 16
 
     }
     ,
