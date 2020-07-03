@@ -14,8 +14,8 @@ const cardConfig = {
         properties: ['name_ru', 'inn'],
         links: ['CONTROLS', 'DIRECTOR', 'SAME_INN']
     },
-    KgMinjustParticipant: {
-        label: 'KgMinjustParticipant',
+    KgMinjustParticipants: {
+        label: 'KgMinjustParticipants',
         style: {backgroundColor: 'red'},
         icon: <AccountCircleIcon style={{ fontSize: 30 }}/>,
         subHeaderUrlParam: 'org_url',
