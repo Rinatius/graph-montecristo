@@ -8,36 +8,50 @@ import ParticipantCard from "../Cards/ParticipantCard";
 import {Graph} from "react-d3-graph";
 import Card from '../Cards/Card'
 import CardConfig from '../config'
+//import business from '../Cards/Icons/businessIcon.svg'
+
+import { ReactComponent as business } from '../Cards/Icons/businessIcon.svg';
 
 
 
 
-const displayGraph = (graph) => {
-  //console.log('GRAPH.NODES IN DISPLAY GRAPH ', Object.values(graph.nodes))
+const displayGraph = (props) => {
+
   const dispGraph = {
-    nodes: Object.values(graph.nodes),
-    links: Object.values(graph.edges),
+    nodes: Object.values(props.visibleGraph.toJS().nodes),
+    links: Object.values(props.visibleGraph.toJS().edges),
   }
   const card_nodes_ids = [9350, 18766, 371947]
   dispGraph.nodes = dispGraph.nodes.map((node) => {
 
     // if node.id is in array, apply viewGenerator
 
-    console.log("NODE: ", )
-
     if (card_nodes_ids.includes(node.id)) { 
      node.size = 3000
-     //console.log("CARD NODE ", node)
-     return node
+     
+     node.viewGenerator = (n) => {
+      return <Card 
+                node={n}
+                vGraph={props.visibleGraph} 
+                iGraph={props.invisibleGraph} 
+                onButtonClick={props.onButtonClick} />
+    }
+
     }
     // else return SVG icon
 
     else {
-      node.svg = CardConfig[node.labels[0]].icon
-      node.viewGenerator = () => {console.log("HERE", node.svg); return node.svg}
-      node.size = 900
-      return node
+      node.svg = CardConfig[node.labels[0]].svg
+      console.log("SVG ", node)
+      node.size = 600
+      node.renderLabel = true
+      node.fontWeight = 'bolder'
+      node.labelProperty = CardConfig[node.labels[0]].contentTextParam
+      node.fontSize = 900
+      console.log("RENDER LABEL SVG", node.renderLabel)
+      
     }
+    return node
    })
   console.log('DisGraph ', dispGraph) 
   return dispGraph
@@ -53,14 +67,9 @@ const MGraph = (props) => {
     node: {
       color: "lightgreen",
       highlightStrokeColor: "blue",
-      viewGenerator: (n) => {
-        return <Card 
-                  node={n}
-                  vGraph={props.visibleGraph} 
-                  iGraph={props.invisibleGraph} 
-                  onButtonClick={props.onButtonClick} />
-      },
       size: 3300,
+      fontSize: 12
+
     }
     ,
     "d3": {
@@ -75,7 +84,7 @@ const MGraph = (props) => {
   return <Graph
 
     id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
-    data={displayGraph(props.visibleGraph.toJS())}
+    data={displayGraph(props)}
     config={myConfig}
   />
 }
