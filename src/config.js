@@ -11,7 +11,7 @@ const cardConfig = {
         subHeaderUrlParam: 'url',
         subHeaderText: 'Минюст',
         contentTextParam: 'name_ru',
-        properties: ['name_ru', 'inn'],
+        properties: ['name_ru', 'inn', 'head_name_sur', 'street'],
         links: ['CONTROLS', 'DIRECTOR', 'SAME_INN']
     },
     KgMinjustParticipants: {
