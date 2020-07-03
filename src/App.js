@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
 import './App.css';
-import TextField from '@material-ui/core/TextField';
 import './my-svg.svg'
 import GraphComponent from './components/GraphComponent'
 import Pagination from '@material-ui/lab/Pagination';
 import queryString from 'query-string'
-import Sidebar from './SideBar/SideBar';
+import AppSideBar from './SideBar/AppSideBar'
 
 const axios = require('axios').default;
-
 
 class App extends Component {
 
   state = {
     cypherQuery: "MATCH (n) where id(n) in [2437183, 18766, 2460290, 371947, 9350, 2437735, 1150073] return n",
+    searchText: "",
     goClick: false,
     clearGraph: false,
     listOfNodes: [],
@@ -42,17 +40,16 @@ class App extends Component {
   }
 
   handleSearchTextChange = (event) => {
-    this.setState({searchText: event.target.value})
+    let query = "MATCH (n) where n.text_search =~ '.*" + event.target.value + ".*' return id(n)"
+    this.setState({searchText: event.target.value, cypherQuery: query})
   }
 
   handlePaginationChange = (event, value) => {
-
     this.handleClearClick()
     let nodes = this.state.listOfNodes[value - 1]
     let query = "MATCH (n) where id(n) in [" + nodes.join() + "] return n"
     this.setState({cypherQuery: query})
     this.handleGoClick()
-
   }
 
   fetchData = (urlString) => {
@@ -92,30 +89,28 @@ class App extends Component {
     this.setState({clearGraph: false})
   }
 
+  handleResetClick = () => {
+    this.handleClearClick()
+    this.handleGoClick()
+  }
+
   render() {
     return(
       <div className='App'>
-        <Sidebar 
-         value={this.state.cypherQuery}
-         onChange={this.handleCypherQueryTextChange}
-         cypherQuery={this.state.cypherQuery}
-         goButtonClicked={this.handleGoClick}/>
-        <TextField id="query"
-                   label="Query"
-                   value={this.state.cypherQuery}
-                   onChange={this.handleCypherQueryTextChange}
-        />
-        <Button variant="contained"
-                onClick={this.handleGoClick}>Go</Button>
-        <Button variant="contained"
-                onClick={this.handleClearClick}>Clear</Button>
-        <GraphComponent 
-          cypherQuery={this.state.cypherQuery}
-          isGoClick={this.state.goClick}
-          goClick={this.goClick}
-          isClearGraph={this.state.clearGraph}
-          clearClick={this.clearClick}/>
-        {this.state.showPagination? <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} showFirstButton showLastButton /> : null}
+        <AppSideBar cypherQuery={this.state.cypherQuery}
+        handleCypherQueryTextChange={this.handleCypherQueryTextChange}
+        handleGoClick={this.handleGoClick} 
+        handleResetClick={this.handleResetClick}
+        handleClearClick={this.handleClearClick}>
+          <GraphComponent 
+            cypherQuery={this.state.cypherQuery}
+            isGoClick={this.state.goClick}
+            goClick={this.goClick}
+            isClearGraph={this.state.clearGraph}
+            clearClick={this.clearClick}/>
+            {this.state.showPagination? <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} showFirstButton showLastButton /> : null}
+        </AppSideBar>
+        
       </div>
     )
   }
