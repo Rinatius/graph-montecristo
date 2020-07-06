@@ -12,9 +12,7 @@ const displayGraph = (props) => {
   }
   const card_nodes_ids = [9350, 18766, 371947]
   dispGraph.nodes = dispGraph.nodes.map((node) => {
-
     // if node.id is in array, apply viewGenerator
-
     if (card_nodes_ids.includes(node.id)) { 
      node.size = 3000;
      node.dispLabel = " "
@@ -24,11 +22,7 @@ const displayGraph = (props) => {
                 vGraph={props.visibleGraph} 
                 iGraph={props.invisibleGraph} 
                 onButtonClick={props.onButtonClick} />
-    }}
-
-    // else return SVG icon
-
-    else {
+    }} else { // else return SVG icon 
       node.svg = CardConfig[node.labels[0]].svg
       node.size = 600
       node.fontSize = 16
