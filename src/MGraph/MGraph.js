@@ -2,7 +2,9 @@ import React from "react";
 import {Graph} from "react-d3-graph";
 import Card from '../Cards/Card';
 import CardConfig from '../config';
-
+import relationshipConfig from '../config';
+import translate from '../Cards/utils/translate';
+import shorten from '../Cards/utils/shorten';
 
 const displayGraph = (props) => {
 
@@ -10,10 +12,13 @@ const displayGraph = (props) => {
     nodes: Object.values(props.visibleGraph.toJS().nodes),
     links: Object.values(props.visibleGraph.toJS().edges),
   }
+
   let cardNodeIds = props.cardNodeIds.toJS()
-  console.log('mgraph card nodes: ', cardNodeIds)
+  //console.log('mgraph card nodes: ', cardNodeIds)
   dispGraph.nodes = dispGraph.nodes.map((node) => {
+
     // if node.id is in array, apply viewGenerator
+
     if (cardNodeIds.includes(node.id)) { 
      node.size = 3000;
      node.dispLabel = " "
@@ -28,12 +33,23 @@ const displayGraph = (props) => {
       node.svg = CardConfig[node.labels[0]].svg
       node.size = 600
       node.fontSize = 16
-      node.dispLabel = node.properties[CardConfig[node.labels[0]].contentTextParam]
-      //node.labelProperty =
+      node.dispLabel = shorten(node.properties[CardConfig[node.labels[0]].contentTextParam])
     }
-    console.log('RENDERLABEL', node)
+
     return node
    })
+
+
+   dispGraph.links = dispGraph.links.map((link) => {
+     if (Object.keys(link.properties).length !== 0) {
+        link.label = Object.values(link.properties).join(" ")
+     }
+     else {
+      link.label = translate(link.type, 'ru')
+    }
+     return link
+   })
+
   return dispGraph
 };
 
@@ -63,6 +79,9 @@ const MGraph = (props) => {
     },
     link: {
       highlightColor: "lightblue",
+      renderLabel: true,
+      labelProperty: 'label'
+
     },
   };
 
