@@ -6,23 +6,20 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import LoopIcon from '@material-ui/icons/Loop';
 import ClearIcon from '@material-ui/icons/Clear';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import Tooltip from '@material-ui/core/Tooltip'
 
 const drawerWidth = 240;
 
@@ -124,8 +121,8 @@ export default function PersistentDrawerLeft(props) {
           </IconButton>
           <TextField
           className={classes.searchBar}
-          value={props.cypherQuery}
-          onChange={props.handleCypherQueryTextChange}
+          value={props.searchText}
+          onChange={props.handleSearchTextChange}
           placeholder="Search..."
           InputProps={{
             style: {color: 'white'},
@@ -135,15 +132,21 @@ export default function PersistentDrawerLeft(props) {
             }
           }}
         />
-        <IconButton aria-label="search" onClick={props.handleGoClick}>
-          <SearchIcon style={{fill: "#7CFC00"}} />
-        </IconButton>
-        <IconButton aria-label="reset" onClick={props.handleResetClick}>
-          <LoopIcon style={{fill: "white"}} />
-        </IconButton>
-        <IconButton aria-label="clear" onClick={props.handleClearClick}>
-          <ClearIcon style={{fill: "red"}}/>
-        </IconButton>
+        <Tooltip title="Search">
+          <IconButton aria-label="search" onClick={props.handleGoClick}>
+            <SearchIcon style={{fill: "#7CFC00"}} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Reset">
+          <IconButton aria-label="reset" onClick={props.handleResetClick}>
+            <LoopIcon style={{fill: "white"}} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Clear">
+          <IconButton aria-label="clear" onClick={props.handleClearClick}>
+            <ClearIcon style={{fill: "red"}}/>
+          </IconButton>
+        </Tooltip>
         </Toolbar>
       </AppBar>
       <Drawer

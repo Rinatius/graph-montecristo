@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   handleSearchTextChange = (event) => {
-    let query = "MATCH (n) where n.text_search =~ '.*" + event.target.value + ".*' return id(n)"
+    let query = "MATCH (n) where n.text_search =~ '.*" + event.target.value + ".*' return n"
     this.setState({searchText: event.target.value, cypherQuery: query})
   }
 
@@ -97,11 +97,14 @@ class App extends Component {
   render() {
     return(
       <div className='App'>
-        <AppSideBar cypherQuery={this.state.cypherQuery}
-        handleCypherQueryTextChange={this.handleCypherQueryTextChange}
-        handleGoClick={this.handleGoClick} 
-        handleResetClick={this.handleResetClick}
-        handleClearClick={this.handleClearClick}>
+        <AppSideBar 
+          cypherQuery={this.state.cypherQuery}
+          handleCypherQueryTextChange={this.handleCypherQueryTextChange}
+          searchText={this.state.searchText}
+          handleSearchTextChange={this.handleSearchTextChange}
+          handleGoClick={this.handleGoClick} 
+          handleResetClick={this.handleResetClick}
+          handleClearClick={this.handleClearClick}>
           <GraphComponent 
             cypherQuery={this.state.cypherQuery}
             isGoClick={this.state.goClick}
