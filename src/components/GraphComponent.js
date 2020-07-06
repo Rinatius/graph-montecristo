@@ -125,16 +125,42 @@ class GraphComponent extends Component{
     this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
   }
 
-  handleMinimezeClick = (nodeId) => {
-    console.log("NODE ID: ", nodeId)
+  removeFromArray = (nodeId) => {
     let cardNodeIds = this.state.cardNodeIds.toJS()
-    console.log(cardNodeIds.indexOf(nodeId))
     const idIndex = cardNodeIds.indexOf(parseInt(nodeId))
     if (idIndex > -1) {
       cardNodeIds.splice(idIndex, 1)
     }
-    console.log('minimize ids: ', cardNodeIds)
+    return cardNodeIds
+  }
+
+  addToArray = (nodeId) => {
+    let cardNodeIds = this.state.cardNodeIds.toJS()
+    const idIndex = cardNodeIds.indexOf(parseInt(nodeId))
+    if (idIndex === -1) {
+      cardNodeIds.push(parseInt(nodeId))
+    }
+    return cardNodeIds
+  }
+
+  handleMinimezeClick = (nodeId) => {
+    console.log('minimize clicked', nodeId)
+    const cardNodeIds = this.removeFromArray(nodeId)
+    console.log('card nodes after minimize: ', cardNodeIds)
     this.setState({cardNodeIds: Immutable.fromJS(cardNodeIds)})
+  }
+
+  handleNodeClick = (nodeId) => {
+    console.log('node clicked', nodeId)
+    console.log(parseInt(nodeId))
+    console.log(this.state.cardNodeIds.toJS())
+    console.log(!this.state.cardNodeIds.toJS().includes(parseInt(nodeId)))
+    if (!this.state.cardNodeIds.toJS().includes(parseInt(nodeId))){
+      const cardNodeIds = this.addToArray(nodeId)
+      this.setState({cardNodeIds: Immutable.fromJS(cardNodeIds)})
+    } else {
+      console.log('doing nothing')
+    }
   }
 
   render() {
@@ -143,6 +169,7 @@ class GraphComponent extends Component{
       graph = <MGraph 
         onButtonClick={this.handleButtonClick}
         onMinimizeClick={this.handleMinimezeClick}
+        onNodeClick={this.handleNodeClick}
         visibleGraph={this.state.visibleGraph}
         invisibleGraph={this.state.invisibleGraph}
         cardNodeIds={this.state.cardNodeIds}/>
