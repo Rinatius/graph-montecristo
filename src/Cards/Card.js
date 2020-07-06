@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MinimizeIcon from '@material-ui/icons/Minimize';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Divider from '@material-ui/core/Divider'
 
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
           }
           action={
             <IconButton aria-label="settings">
-              <MoreVertIcon />
+              <MinimizeIcon onClick={() => props.onMinimizeClick(props.node.id)}/>
             </IconButton>
           }
           subheader={<Typography>{subheader}</Typography>} 

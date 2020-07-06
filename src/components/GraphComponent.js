@@ -13,7 +13,8 @@ class GraphComponent extends Component{
 
   state = {
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
-    invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}})
+    invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
+    cardNodeIds: Immutable.fromJS([9350, 18766, 371947])
   }
 
   componentDidUpdate(prevProps) {
@@ -124,13 +125,27 @@ class GraphComponent extends Component{
     this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
   }
 
+  handleMinimezeClick = (nodeId) => {
+    console.log("NODE ID: ", nodeId)
+    let cardNodeIds = this.state.cardNodeIds.toJS()
+    console.log(cardNodeIds.indexOf(nodeId))
+    const idIndex = cardNodeIds.indexOf(parseInt(nodeId))
+    if (idIndex > -1) {
+      cardNodeIds.splice(idIndex, 1)
+    }
+    console.log('minimize ids: ', cardNodeIds)
+    this.setState({cardNodeIds: Immutable.fromJS(cardNodeIds)})
+  }
+
   render() {
     let graph = null
     if (Object.keys(this.state.visibleGraph.toJS().nodes).length !== 0) {
       graph = <MGraph 
         onButtonClick={this.handleButtonClick}
+        onMinimizeClick={this.handleMinimezeClick}
         visibleGraph={this.state.visibleGraph}
-        invisibleGraph={this.state.invisibleGraph}/>
+        invisibleGraph={this.state.invisibleGraph}
+        cardNodeIds={this.state.cardNodeIds}/>
     }
     return(
       <div>

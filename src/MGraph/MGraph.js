@@ -10,10 +10,11 @@ const displayGraph = (props) => {
     nodes: Object.values(props.visibleGraph.toJS().nodes),
     links: Object.values(props.visibleGraph.toJS().edges),
   }
-  const card_nodes_ids = [9350, 18766, 371947]
+  let cardNodeIds = props.cardNodeIds.toJS()
+  console.log('mgraph card nodes: ', cardNodeIds)
   dispGraph.nodes = dispGraph.nodes.map((node) => {
     // if node.id is in array, apply viewGenerator
-    if (card_nodes_ids.includes(node.id)) { 
+    if (cardNodeIds.includes(node.id)) { 
      node.size = 3000;
      node.dispLabel = " "
      node.viewGenerator = (n) => {
@@ -21,7 +22,8 @@ const displayGraph = (props) => {
                 node={n}
                 vGraph={props.visibleGraph} 
                 iGraph={props.invisibleGraph} 
-                onButtonClick={props.onButtonClick} />
+                onButtonClick={props.onButtonClick}
+                onMinimizeClick={props.onMinimizeClick} />
     }} else { // else return SVG icon 
       node.svg = CardConfig[node.labels[0]].svg
       node.size = 600
@@ -84,7 +86,9 @@ const MGraph = (props) => {
 }
 
 const areEqual = (prevProps, nextProps) => {
-  return (prevProps.visibleGraph === nextProps.visibleGraph) && (prevProps.invisibleGraph === nextProps.invisibleGraph);
+  return (prevProps.visibleGraph === nextProps.visibleGraph) 
+          && (prevProps.invisibleGraph === nextProps.invisibleGraph)
+          && (prevProps.cardNodeIds === nextProps.cardNodeIds)
 }
 
 export default React.memo(MGraph, areEqual);
