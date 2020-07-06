@@ -5,6 +5,7 @@ import GraphComponent from './components/GraphComponent'
 import Pagination from '@material-ui/lab/Pagination';
 import queryString from 'query-string'
 import AppSideBar from './SideBar/AppSideBar'
+import Grid from '@material-ui/core/Grid'
 
 const axios = require('axios').default;
 
@@ -27,7 +28,7 @@ class App extends Component {
       query = "MATCH (n) where id(n) in [" + urlString.nodes + "] return n"
       console.log("NODES", query)
       this.setState({cypherQuery: query})
-      // this.handleGoClick()
+      this.handleGoClick()
     }
     else if (urlString.url) {
       console.log("urlString", urlString)
@@ -64,6 +65,7 @@ class App extends Component {
       let query = "MATCH (n) where id(n) in [" + response.data[0].join() + "] return n"
       console.log(query)
       this.setState({listOfNodes: response.data, showPagination: true, cypherQuery: query})
+      this.handleGoClick()
     })
     .catch(error => {
       // handle error
@@ -94,6 +96,14 @@ class App extends Component {
     this.handleGoClick()
   }
 
+  returnPagination = () => {
+    return (
+    <Grid container justify="center" >
+      <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
+    </Grid>
+    )
+  }
+
   render() {
     return(
       <div className='App'>
@@ -111,9 +121,8 @@ class App extends Component {
             goClick={this.goClick}
             isClearGraph={this.state.clearGraph}
             clearClick={this.clearClick}/>
-            {this.state.showPagination? <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} showFirstButton showLastButton /> : null}
+            {this.state.showPagination? this.returnPagination() : null}
         </AppSideBar>
-        
       </div>
     )
   }
