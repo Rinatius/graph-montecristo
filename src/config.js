@@ -86,3 +86,41 @@ const cardConfig = {
 }
 
 export default cardConfig
+
+
+export const relationshipConfig = {
+    
+    CONTROLS: {
+        properties: []
+    },
+    ANNOUNCED: {
+        properties: []
+    },
+    DIRECTOR: {
+        properties: []
+    },
+    INCLUDES_LOTS: {
+        properties: []
+    },
+    NAME_SAKE: {
+        properties: []
+    },
+    NAME_SAKE_INDIVIDUAL: {
+        properties: []
+    },
+    PROBABLE_FATHER: {
+        properties: []
+    },
+    PARTICIPATED_IN: {
+        properties: ['proposed_price', 'result']
+    },
+    PROBABLE_SIBLING: {
+        properties: []
+    },
+    PROBABLE_KID: {
+        properties: []
+    },
+    SAME_INN: {
+        properties: []
+    },
+}
