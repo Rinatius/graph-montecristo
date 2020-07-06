@@ -44,10 +44,6 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: red[500],
     },
-    divider: {
-      paddingTop: '5px',
-      paddingBottom: '5px'
-    },
     cardContent: {
       paddingTop: 0,
       paddingBottom: 0
@@ -93,9 +89,7 @@ const useStyles = makeStyles((theme) => ({
         />
         <CardContent className={classes.cardContent}>
           <NestedProperties node={props.node}/>
-          <div className="divider">
-            <Divider />
-          </div>
+          <Divider style={{marginTop: 8}} />
           <NestedLinks
             node={props.node}
             vGraph={props.vGraph}

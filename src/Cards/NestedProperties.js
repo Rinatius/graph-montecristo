@@ -2,9 +2,17 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import cardConfig from '../config'
 import shorten from './utils/shorten'
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+    contentTextParam: {
+        fontWeight: "bold",
+        marginBottom: "5px"
+    }
+}));
 
-const nestedProperties = (props) => {
+const NestedProperties = (props) => {
+    const classes = useStyles();
     let listOfProps = []
     const label = props.node.labels[0]
     if (Object.keys(cardConfig).includes(label)) {
@@ -23,7 +31,7 @@ const nestedProperties = (props) => {
     console.log( props.node.properties[cardConfig[label].contentTextParam] )
     return (
         <div>
-            <Typography variant="h5" color="textPrimary" component="p">
+            <Typography className={classes.contentTextParam} variant="body2" color="textPrimary" component="p" >
                 { shorten(props.node.properties[cardConfig[label].contentTextParam]) }
             </Typography>
         {listOfProps}
@@ -31,4 +39,4 @@ const nestedProperties = (props) => {
     )
 }
 
-export default nestedProperties
+export default NestedProperties
