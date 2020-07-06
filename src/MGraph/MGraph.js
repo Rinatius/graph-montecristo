@@ -37,17 +37,6 @@ const displayGraph = (props) => {
   return dispGraph
 };
 
-const myCustomLabelBuilder = (node, props) => {
-  const card_nodes_ids = [9350, 18766, 371947]
-  if (card_nodes_ids.includes(node.id)) { 
-  console.log('NODE iD', node.id)
-  return false;
-  }
-  else {
-    return true;
-  };
-}
-
 const MGraph = (props) => {
   
 
