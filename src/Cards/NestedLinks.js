@@ -14,6 +14,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 import translate from './utils/translate'
 import cardConfig from '../config'
@@ -98,7 +99,7 @@ const NestedLinks = (props) => {
         <ListItem style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
           <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
           <ListItemIcon className={classes.listItemIcon}>
-            <BubbleChartIcon />
+            <AccountTreeIcon />
           </ListItemIcon>
         </ListItem>)
     }
