@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
+    background: 'transparent',
+    boxShadow: 'none',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -42,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
+    color: 'gray',
     marginRight: theme.spacing(2),
   },
   hide: {
@@ -82,9 +85,9 @@ const useStyles = makeStyles((theme) => ({
     width: '600px', 
     paddingLeft: 7, 
     paddingRight: 7,
-    border: '2px solid white', 
+    border: '2px solid gray', 
     borderRadius: 25,
-  }
+  },
 }));
 
 export default function PersistentDrawerLeft(props) {
@@ -120,12 +123,12 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           <TextField
+          style={{color: 'grey'}}
           className={classes.searchBar}
           value={props.searchText}
           onChange={props.handleSearchTextChange}
           placeholder="Search..."
           InputProps={{
-            style: {color: 'white'},
             disableUnderline: true,
             inputProps: {
               'aria-label': "Search"
@@ -134,17 +137,17 @@ export default function PersistentDrawerLeft(props) {
         />
         <Tooltip title="Search">
           <IconButton aria-label="search" onClick={props.handleGoClick}>
-            <SearchIcon style={{fill: "#7CFC00"}} />
+            <SearchIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Reset">
           <IconButton aria-label="reset" onClick={props.handleResetClick}>
-            <LoopIcon style={{fill: "white"}} />
+            <LoopIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Clear">
           <IconButton aria-label="clear" onClick={props.handleClearClick}>
-            <ClearIcon style={{fill: "red"}}/>
+            <ClearIcon />
           </IconButton>
         </Tooltip>
         </Toolbar>
@@ -188,7 +191,7 @@ export default function PersistentDrawerLeft(props) {
                 startIcon={<PlayArrowIcon />}>Run Query</Button>
       </List>
       </Drawer>
-      <main
+      <main style={{padding: 0, height: '100%'}}
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}

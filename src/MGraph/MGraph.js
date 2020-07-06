@@ -45,8 +45,8 @@ const displayGraph = (props) => {
 const MGraph = (props) => {
 
   const myConfig = {
-    height:1080,
-    width:1920,
+    height:'600px',
+    width:'100%',
     staticGraphWithDragAndDrop: true,
     nodeHighlightBehavior: true,
     node: {
@@ -68,7 +68,6 @@ const MGraph = (props) => {
   };
 
   return <Graph
-
     id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
     data={displayGraph(props)}
     config={myConfig}
