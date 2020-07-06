@@ -99,7 +99,7 @@ class App extends Component {
   returnPagination = () => {
     return (
     <Grid container justify="center" >
-      <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} showFirstButton showLastButton />
+      <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} size="small" showFirstButton showLastButton />
     </Grid>
     )
   }

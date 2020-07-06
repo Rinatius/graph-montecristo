@@ -57,7 +57,7 @@ const MGraph = (props) => {
   
 
   const myConfig = {
-    height:'600px',
+    height: window.innerHeight - 110,
     width:'100%',
     staticGraphWithDragAndDrop: true,
     // nodeHighlightBehavior: true,
