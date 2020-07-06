@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   handleSearchTextChange = (event) => {
-    let query = "MATCH (n) where n.text_search =~ '.*" + event.target.value + ".*' return n"
+    let query = "MATCH (n) where n.text_search =~ '.*" + event.target.value.toLowerCase() + ".*' return n"
     this.setState({searchText: event.target.value, cypherQuery: query})
   }
 
