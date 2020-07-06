@@ -16,9 +16,9 @@ const displayGraph = (props) => {
     // if node.id is in array, apply viewGenerator
 
     if (card_nodes_ids.includes(node.id)) { 
-     node.size = 3000
-     node.renderLabel = true
-     node.label = CardConfig[node.labels[0]].contentTextParam
+     node.size = 3000;
+     node.renderLabel = false;
+     node.fontSize = 0;
      node.viewGenerator = (n) => {
       return <Card 
                 node={n}
@@ -31,18 +31,30 @@ const displayGraph = (props) => {
 
     else {
       node.svg = CardConfig[node.labels[0]].svg
-      console.log("SVG ", node)
       node.size = 600
-      node.renderLabel = true
-      node.label = CardConfig[node.labels[0]].contentTextParam
-      
+      node.fontSize = 16
+      node.label = node.properties[CardConfig[node.labels[0]].contentTextParam] 
+      node.labelProperty = node.label
     }
+    console.log('RENDERLABEL', node)
     return node
    }) 
   return dispGraph
 };
 
+const myCustomLabelBuilder = (node, props) => {
+  const card_nodes_ids = [9350, 18766, 371947]
+  if (card_nodes_ids.includes(node.id)) { 
+  console.log('NODE iD', node.id)
+  return false;
+  }
+  else {
+    return true;
+  };
+}
+
 const MGraph = (props) => {
+  
 
   const myConfig = {
     height:'600px',
@@ -56,6 +68,7 @@ const MGraph = (props) => {
       size: 3300,
       fontSize: 16
 
+
     }
     ,
     "d3": {
@@ -68,9 +81,10 @@ const MGraph = (props) => {
   };
 
   return <Graph
+    config={myConfig}
     id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
     data={displayGraph(props)}
-    config={myConfig}
+    
   />
 }
 
