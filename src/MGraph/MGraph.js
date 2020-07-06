@@ -89,7 +89,7 @@ const MGraph = (props) => {
     config={myConfig}
     id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
     data={displayGraph(props)}
-    // onClickNode={(nodeId) => {props.onNodeClick(nodeId)}}
+    onDoubleClickNode ={(nodeId) => {props.onNodeClick(nodeId)}}
   />
 }
 
