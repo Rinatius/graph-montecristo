@@ -184,7 +184,7 @@ export default function PersistentDrawerLeft(props) {
       <List>
         <Button variant="contained"
                 className={classes.GoButton}
-                onClick={props.goButtonClicked}
+                onClick={props.handleGoClick}
                 startIcon={<PlayArrowIcon />}>Run Query</Button>
       </List>
       </Drawer>
