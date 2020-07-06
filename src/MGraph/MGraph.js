@@ -17,8 +17,7 @@ const displayGraph = (props) => {
 
     if (card_nodes_ids.includes(node.id)) { 
      node.size = 3000;
-     node.renderLabel = false;
-     node.fontSize = 0;
+     node.dispLabel = " "
      node.viewGenerator = (n) => {
       return <Card 
                 node={n}
@@ -33,12 +32,12 @@ const displayGraph = (props) => {
       node.svg = CardConfig[node.labels[0]].svg
       node.size = 600
       node.fontSize = 16
-      node.label = node.properties[CardConfig[node.labels[0]].contentTextParam] 
-      node.labelProperty = node.label
+      node.dispLabel = node.properties[CardConfig[node.labels[0]].contentTextParam]
+      //node.labelProperty =
     }
     console.log('RENDERLABEL', node)
     return node
-   }) 
+   })
   return dispGraph
 };
 
@@ -60,17 +59,19 @@ const MGraph = (props) => {
     height:'600px',
     width:'100%',
     staticGraphWithDragAndDrop: true,
-    nodeHighlightBehavior: true,
+    // nodeHighlightBehavior: true,
     node: {
-      color: "lightgreen",
-      labelProperty: 'label',
-      highlightStrokeColor: "blue",
-      size: 3300,
-      fontSize: 16
-
-
-    }
-    ,
+      labelProperty: "dispLabel"
+    },
+    //   color: "lightgreen",
+    //   labelProperty: 'label',
+    //   highlightStrokeColor: "blue",
+    //   size: 3300,
+    //   fontSize: 16
+    //
+    //
+    // }
+    // ,
     "d3": {
       "linkLength": 300,
       "linkStrength": 0.1,
