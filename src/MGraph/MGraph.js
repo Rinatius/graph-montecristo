@@ -2,12 +2,11 @@ import React from "react";
 import {Graph} from "react-d3-graph";
 import Card from '../Cards/Card';
 import CardConfig from '../config';
-import relationshipConfig from '../config';
 import translate from '../Cards/utils/translate';
 import shorten from '../Cards/utils/shorten';
+import { relationshipConfig } from '../config';
 
 const displayGraph = (props) => {
-
   const dispGraph = {
     nodes: Object.values(props.visibleGraph.toJS().nodes),
     links: Object.values(props.visibleGraph.toJS().edges),
@@ -41,14 +40,35 @@ const displayGraph = (props) => {
 
 
    dispGraph.links = dispGraph.links.map((link) => {
+
+      // if PARTICIPATED_IN.properties not empty
+     if (relationshipConfig[link.type].properties.length !== 0) {
+        
+        let label = ''
+        for ( let value of Object.values((relationshipConfig[link.type].properties))) { // for [proposed_price, result]
+          label = label + link.properties[value] + ' '
+        }
+        link.label = label
+        console.log("LINK LABLES", link.label, link)
+     }
+     else {
+        link.label = translate(link.type, 'ru')
+     }
+     return link
+    })
+
+
+     /* DO NOT DELETE
+     
      if (Object.keys(link.properties).length !== 0) {
         link.label = Object.values(link.properties).join(" ")
      }
      else {
       link.label = translate(link.type, 'ru')
     }
+     console.log('LINK', link)
      return link
-   })
+   }) */
 
   return dispGraph
 };
