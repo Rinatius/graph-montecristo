@@ -35,8 +35,8 @@ const cardConfig = {
         svg:  'https://firebasestorage.googleapis.com/v0/b/newagent-b0720.appspot.com/o/graph-montecristo%2FaccounCircle%20(2).svg?alt=media&token=74846eeb-337b-4923-b87d-c2d3731f62cc',
         subHeaderUrlParam: '',
         subHeaderText: 'Минюст',
-        contentTextParam: 'inn',
-        properties: ['inn'],
+        contentTextParam: 'head_name_sur',
+        properties: ['head_name_sur'],
         links: ['DIRECTOR', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID']
     },
     KgProcurementParticipants: {
@@ -46,7 +46,7 @@ const cardConfig = {
         svg: 'https://firebasestorage.googleapis.com/v0/b/newagent-b0720.appspot.com/o/graph-montecristo%2FbusinessIcon%20(3).svg?alt=media&token=3bfb714a-6b0e-4be4-b4ee-92573608a1b9',
         subHeaderUrlParam: '',
         subHeaderText: 'Гос. закупки',
-        contentTextParam: 'inn',
+        contentTextParam: 'name',
         properties: ['inn'],
         links: ['PARTICIPATED_IN', 'PARTICIPATED_IN', 'NAME_SAKE_INDIVIDUAL']
     }, 
