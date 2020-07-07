@@ -15,7 +15,8 @@ const cardConfig = {
         subHeaderText: 'Минюст',
         contentTextParam: 'name_ru',
         properties: ['name_ru', 'inn', 'head_name_sur', 'street'],
-        links: ['CONTROLS', 'DIRECTOR', 'SAME_INN']
+        links: ['CONTROLS', 'DIRECTOR', 'SAME_INN'],
+        reverseLinks: {}
     },
     KgMinjustParticipants: {
         label: 'KgMinjustParticipants',
@@ -26,7 +27,8 @@ const cardConfig = {
         subHeaderText: 'Минюст',
         contentTextParam: 'name',
         properties: ['name'],
-        links: ['CONTROLS', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID']
+        links: ['CONTROLS', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID'],
+        reverseLinks: {}
     },
     HeadNameSur: {
         label: 'HeadNameSur',
@@ -37,7 +39,8 @@ const cardConfig = {
         subHeaderText: 'Минюст',
         contentTextParam: 'head_name_sur',
         properties: ['head_name_sur'],
-        links: ['DIRECTOR', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID']
+        links: ['DIRECTOR', 'NAME_SAKE', 'PROBABLE_FATHER', 'PROBABLE_SIBLING', 'PROBABLE_KID'],
+        reverseLinks: {}
     },
     KgProcurementParticipants: {
         label: 'KgProcurementParticipants',
@@ -48,7 +51,8 @@ const cardConfig = {
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'name',
         properties: ['inn'],
-        links: ['PARTICIPATED_IN', 'PARTICIPATED_IN', 'NAME_SAKE_INDIVIDUAL']
+        links: ['PARTICIPATED_IN', 'NAME_SAKE_INDIVIDUAL'],
+        reverseLinks: {}
     }, 
     KgProcurementLots: {
         label: 'KgProcurementLots',
@@ -59,7 +63,9 @@ const cardConfig = {
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'lot_name',
         properties: ['lot_name'],
-        links: ['PARTICIPATED_IN', 'INCLUDES_LOTS']
+        links: ['PARTICIPATED_IN', 'INCLUDES_LOTS'],
+        reverseLinks: {'PARTICIPATED_IN':'PARTICIPANTS',
+                        'INCLUDES_LOTS': 'TENDER'}
     },
     KgProcurement: {
         label: 'KgProcurement',
@@ -70,7 +76,8 @@ const cardConfig = {
         subHeaderText: 'Тендер',
         contentTextParam: 'procurement_object_no_quotes',
         properties: ['procurement_method'],
-        links: ['ANNOUNCED', 'INCLUDES_LOTS']
+        links: ['ANNOUNCED', 'INCLUDES_LOTS'],
+        reverseLinks: {'ANNOUNCED':'ENTITY'}
     },
     KgProcurementEntitiesWithAddresses: {
         label: 'KgProcurementEntitiesWithAddresses',
@@ -79,9 +86,10 @@ const cardConfig = {
         svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/gavelGreen.svg',
         subHeaderUrlParam: '',
         subHeaderText: 'Закупающая организация',
-        contentTextParam: 'procuring_entity',
+        contentTextParam: 'procuring_entity', 
         properties: ['district'],
-        links: ['ANNOUNCED']
+        links: ['ANNOUNCED'],
+        reverseLinks: {}
     }
 }
 

@@ -6,8 +6,11 @@
     "NAME_SAKE": "Тезки",
     "NAME_SAKE_INDIVIDUAL": "Тезки ИП",
     "PARTICIPATED_IN": "Участвовал в",
-    "PROBABLE_FATHER": "Возможно отец",
-    "PROBABLE_SIBLING": "Возможно брат-сестра",
-    "PROBABLE_KID": "Возможно сын-дочь",
-    "SAME_INN": "Одинаковые ИНН"
+    "PROBABLE_FATHER": "отец (?)",
+    "PROBABLE_SIBLING": "брат-сестра (?)",
+    "PROBABLE_KID": "сын-дочь (?)",
+    "SAME_INN": "Одинаковые ИНН",
+    "PARTICIPANTS": "Участники",
+    "TENDER": "Тендер",
+    "ENTITY": "Закуп. орг"
 }
