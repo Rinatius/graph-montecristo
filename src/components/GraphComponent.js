@@ -48,6 +48,9 @@ class GraphComponent extends Component{
       .then(result => {
         let updatedVisibleGraph = gh.toGraph(result, this.state.visibleGraph.toJS())
         const paramIDs = Object.keys(updatedVisibleGraph.nodes).toString()
+        this.setState({
+          visibleGraph: Immutable.fromJS(updatedVisibleGraph)
+        })
         this.updateInvisible(paramIDs, updatedVisibleGraph, this.state.invisibleGraph.toJS()) 
       })
       .catch(error => {
