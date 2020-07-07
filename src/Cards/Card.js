@@ -94,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
   
   const areEqual = (prevProps, nextProps) => {
     return ((prevProps.vGraph === nextProps.vGraph) && 
-            (prevProps.iGraph === nextProps.iGraph) &&
-            (prevProps.node === nextProps.node));
+            (prevProps.iGraph === nextProps.iGraph)); //&&
+            //(prevProps.node === nextProps.node));
   }
   
   export default React.memo(RecipeReviewCard, areEqual);
