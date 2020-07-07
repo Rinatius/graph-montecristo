@@ -98,8 +98,10 @@ const MGraph = (props) => {
 
   const myConfig = {
     height: windowHeight,
-    width:'100%',
-    staticGraphWithDragAndDrop: true,
+    // width:'100%',
+    //height: 1000,
+    //width: 1000,
+    // staticGraphWithDragAndDrop: true,
     // nodeHighlightBehavior: true,
     node: {
       labelProperty: "dispLabel"
@@ -114,8 +116,11 @@ const MGraph = (props) => {
     // }
     // ,
     "d3": {
-      "linkLength": 300,
-      "linkStrength": 0.1,
+      "alphaTarget": 0.05,
+      "gravity": -100,
+      "linkLength": 100,
+      "linkStrength": 1,
+      "disableLinkForce": false
     },
     link: {
       highlightColor: "lightblue",
