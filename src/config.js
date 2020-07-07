@@ -90,7 +90,12 @@ export const relationshipConfig = {
         properties: []
     },
     PARTICIPATED_IN: {
-        properties: ['proposed_price', 'result']
+        properties: ['proposed_price', 'result'],
+        'result': [{
+            value: '(Подтверждено)',
+            regex: true,
+            color: "red"
+        }]
     },
     PROBABLE_SIBLING: {
         properties: []
