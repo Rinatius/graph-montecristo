@@ -20,7 +20,11 @@ const displayGraph = (props) => {
     // if node.id is in array, apply viewGenerator
 
     if (cardNodeIds.includes(node.id)) { 
-     node.size = 4000;
+     node.size = {
+       height: 4000,
+       width: 2400
+     }
+     node.fontSize = 16
      node.dispLabel = " "
      node.viewGenerator = (n) => {
       return <Card 
@@ -61,11 +65,13 @@ const displayGraph = (props) => {
           label = label + link.properties[value] + ' '
         }
         link.dispLabel = label
+        link.fontSize = 16
 
      }
      // if PARTICIPATED_IN.properties IS empty
      else {
         link.dispLabel = translate(link.type, 'ru')
+        link.fontSize = 16
      }
      return link
     })
@@ -89,10 +95,12 @@ const displayGraph = (props) => {
 const MGraph = (props) => {
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight - 110);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     function handleResize() {
       setWindowHeight(window.innerHeight - 110);
+      setWindowWidth(window.innerWidth)
     }
 
     window.addEventListener('resize', handleResize);
@@ -101,7 +109,7 @@ const MGraph = (props) => {
 
   const myConfig = {
     height: windowHeight,
-    // width:'100%',
+    width: windowWidth,
     //height: 1000,
     //width: 1000,
     // staticGraphWithDragAndDrop: true,
