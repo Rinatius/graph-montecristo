@@ -8,6 +8,7 @@ import MGraph from "../MGraph/MGraph";
 import * as gh from './graphHelpers.js'
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Grid, Typography, Box } from '@material-ui/core';
 
 class GraphComponent extends Component{
 
@@ -18,6 +19,7 @@ class GraphComponent extends Component{
     invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
     cardNodeIds: Immutable.fromJS([9350, 18766, 371947]),
     showSpinner: false,
+    showSmallSpinner: false
   }
 
   componentDidUpdate(prevProps) {
@@ -64,6 +66,7 @@ class GraphComponent extends Component{
   }
 
   updateInvisible = (paramIDs, updatedVisibleGraph, invisibleGraph) => {
+    this.setState({showSmallSpinner: true})
     const invisibleSession = this.driver.session()
     invisibleSession
       .run("MATCH (n)-[r]-(b) WHERE ID(n) in ["+ paramIDs +"] RETURN n, r, b")
@@ -76,7 +79,13 @@ class GraphComponent extends Component{
           visibleGraph: Immutable.fromJS(updatedVisibleGraph),
           invisibleGraph: Immutable.fromJS(updatedInvisibleGraph)
         })
-
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      .then(() => {
+        invisibleSession.close()
+        this.setState({showSmallSpinner: false})
       })
   }
 
@@ -191,6 +200,17 @@ class GraphComponent extends Component{
     )
   }
 
+  returnSmallSpinner = () => {
+    return (
+      <Grid container alignContent="flex-end" direction="column" style={{position:"absolute", right:0,paddingRight: "10px"}}>
+        <Box>
+          <CircularProgress size={32} style={{color: 'grey'}}/>
+        </Box>
+        <Typography variant="body2" component="p" style={{fontSize: "12px"}}>Cвязи загружаются</Typography>
+      </Grid>
+    )
+  }
+
   render() {
     let graph = null
     if (Object.keys(this.state.visibleGraph.toJS().nodes).length !== 0) {
@@ -204,8 +224,8 @@ class GraphComponent extends Component{
     }
     return(
       <div>
+        {this.state.showSmallSpinner ? this.returnSmallSpinner(): null}
         {this.state.showSpinner ? this.returnSpinner() : graph}
-        {/* {graph} */}
       </div>
     )
   }
