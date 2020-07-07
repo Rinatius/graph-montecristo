@@ -1,16 +1,16 @@
 {
     "CONTROLS": "Учредитель", 
-    "ANNOUNCED": "Объявленные лоты", 
+    "ANNOUNCED": "Объявленные тендера", 
     "DIRECTOR": "Директор",
     "INCLUDES_LOTS": "Включает лоты",
     "NAME_SAKE": "Тезки",
     "NAME_SAKE_INDIVIDUAL": "Тезки ИП",
     "PARTICIPATED_IN": "Участвовал в",
-    "PROBABLE_FATHER": "отец (?)",
-    "PROBABLE_SIBLING": "брат-сестра (?)",
-    "PROBABLE_KID": "сын-дочь (?)",
+    "PROBABLE_FATHER": "отец ?",
+    "PROBABLE_SIBLING": "брат-сестра ?",
+    "PROBABLE_KID": "сын-дочь ?",
     "SAME_INN": "Одинаковые ИНН",
     "PARTICIPANTS": "Участники",
     "TENDER": "Тендер",
-    "ENTITY": "Закуп. орг"
+    "ENTITY": "Закупающая. орг"
 }
