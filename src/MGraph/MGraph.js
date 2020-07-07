@@ -4,95 +4,97 @@ import Card from '../Cards/Card';
 import CardConfig from '../config';
 import translate from '../Cards/utils/translate';
 import shorten from '../Cards/utils/shorten';
-import { relationshipConfig } from '../config';
+import {relationshipConfig} from '../config';
 
-const displayGraph = (props) => {
-  const dispGraph = {
-    nodes: Object.values(props.visibleGraph.toJS().nodes),
-    links: Object.values(props.visibleGraph.toJS().edges),
-  }
 
-  let cardNodeIds = props.cardNodeIds.toJS()
-  //console.log('mgraph card nodes: ', cardNodeIds)
-  dispGraph.nodes = dispGraph.nodes.map((node) => {
-    console.log("NODE", node)
+const MGraph = (props) => {
 
-    // if node.id is in array, apply viewGenerator
-
-    if (cardNodeIds.includes(node.id)) { 
-     node.size = {
-       height: 4000,
-       width: 2400
-     }
-     node.fontSize = 16
-     node.dispLabel = " "
-     node.viewGenerator = (n) => {
-      return <Card 
-                node={n}
-                vGraph={props.visibleGraph} 
-                iGraph={props.invisibleGraph} 
-                onButtonClick={props.onButtonClick}
-                onMinimizeClick={props.onMinimizeClick} />
-    }} else { // else return SVG icon 
-      node.svg = CardConfig[node.labels[0]].svg
-      node.size = 600
-      node.fontSize = 16
-      node.dispLabel = shorten(node.properties[CardConfig[node.labels[0]].contentTextParam])
+  const displayGraph = (props) => {
+    const dispGraph = {
+      nodes: Object.values(props.visibleGraph.toJS().nodes),
+      links: Object.values(props.visibleGraph.toJS().edges),
     }
 
-    return node
-   })
+    let cardNodeIds = props.cardNodeIds.toJS()
+    //console.log('mgraph card nodes: ', cardNodeIds)
+    dispGraph.nodes = dispGraph.nodes.map((node) => {
+      console.log("NODE", node)
+
+      // if node.id is in array, apply viewGenerator
+
+      if (cardNodeIds.includes(node.id)) {
+        node.size = {
+          height: 4000,
+          width: 2400
+        }
+        node.fontSize = 16
+        node.dispLabel = " "
+        node.viewGenerator = (n) => {
+          return <Card
+            node={n}
+            vGraph={props.visibleGraph}
+            iGraph={props.invisibleGraph}
+            onButtonClick={props.onButtonClick}
+            onMinimizeClick={props.onMinimizeClick}/>
+        }
+      } else { // else return SVG icon
+        node.svg = CardConfig[node.labels[0]].svg
+        node.size = 600
+        node.fontSize = 16
+        node.dispLabel = shorten(node.properties[CardConfig[node.labels[0]].contentTextParam])
+      }
+
+      return node
+    })
 
 
-   dispGraph.links = dispGraph.links.map((clearLink) => {
+    dispGraph.links = dispGraph.links.map((clearLink) => {
 
-    const link = {...clearLink, ...relationshipConfig[clearLink.type].linkConf }
+      const link = {...clearLink, ...relationshipConfig[clearLink.type].linkConf}
 
       // if PARTICIPATED_IN.properties not empty
-     if (relationshipConfig[link.type].properties.length !== 0) {
-        
+      if (relationshipConfig[link.type].properties.length !== 0) {
+
         relationshipConfig[link.type].result.forEach(conf => {
           // if node.result in value AND regex=true
-          if (conf.value.toLowerCase().includes(link.properties.result.substring(0,7).toLowerCase()) && conf.regex) {
+          if (conf.value.toLowerCase().includes(link.properties.result.substring(0, 7).toLowerCase()) && conf.regex) {
             link.color = conf.color
-          }
-          else {
+          } else {
             console.log("LINK NOT RED")
-          }});
+          }
+        });
 
         let label = ''
-        for ( let value of Object.values((relationshipConfig[link.type].properties))) { // for [proposed_price, result]
+        for (let value of Object.values((relationshipConfig[link.type].properties))) { // for [proposed_price, result]
           label = label + link.properties[value] + ' '
         }
         link.dispLabel = label
         link.fontSize = 16
 
-     }
-     // if PARTICIPATED_IN.properties IS empty
-     else {
+      }
+      // if PARTICIPATED_IN.properties IS empty
+      else {
         link.dispLabel = translate(link.type, 'ru')
         link.fontSize = 16
-     }
-     return link
+      }
+      return link
     })
 
 
-     /* DO NOT DELETE
-     
-     if (Object.keys(link.properties).length !== 0) {
-        link.label = Object.values(link.properties).join(" ")
-     }
-     else {
-      link.label = translate(link.type, 'ru')
+    /* DO NOT DELETE
+
+    if (Object.keys(link.properties).length !== 0) {
+       link.label = Object.values(link.properties).join(" ")
     }
-     console.log('LINK', link)
-     return link
-   }) */
+    else {
+     link.label = translate(link.type, 'ru')
+   }
+    console.log('LINK', link)
+    return link
+  }) */
 
-  return dispGraph
-};
-
-const MGraph = (props) => {
+    return dispGraph
+  };
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight - 110);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -145,14 +147,16 @@ const MGraph = (props) => {
     config={myConfig}
     id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
     data={displayGraph(props)}
-    onDoubleClickNode ={(nodeId) => {props.onNodeClick(nodeId)}}
+    onDoubleClickNode={(nodeId) => {
+      props.onNodeClick(nodeId)
+    }}
   />
 }
 
 const areEqual = (prevProps, nextProps) => {
-  return (prevProps.visibleGraph === nextProps.visibleGraph) 
-          && (prevProps.invisibleGraph === nextProps.invisibleGraph)
-          && (prevProps.cardNodeIds === nextProps.cardNodeIds)
+  return (prevProps.visibleGraph === nextProps.visibleGraph)
+    && (prevProps.invisibleGraph === nextProps.invisibleGraph)
+    && (prevProps.cardNodeIds === nextProps.cardNodeIds)
 }
 
 export default React.memo(MGraph, areEqual);
