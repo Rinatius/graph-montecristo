@@ -2,7 +2,8 @@ import React from 'react'
 import BusinessIcon from '@material-ui/icons/Business';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GavelIcon from '@material-ui/icons/Gavel';
-
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 
 const cardConfig = {
@@ -70,8 +71,8 @@ const cardConfig = {
     KgProcurement: {
         label: 'KgProcurement',
         style: {backgroundColor: '#00897b'},
-        icon: <GavelIcon style={{ fontSize: 30 }}/>,
-        svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/gavelGreen.svg',
+        icon: <MonetizationOnIcon style={{ fontSize: 30 }}/>,
+        svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/monetizeYellow.svg',
         subHeaderUrlParam: 'url',
         subHeaderText: 'Тендер',
         contentTextParam: 'procurement_object_no_quotes',
@@ -82,8 +83,8 @@ const cardConfig = {
     KgProcurementEntitiesWithAddresses: {
         label: 'KgProcurementEntitiesWithAddresses',
         style: {backgroundColor: '#00897b'},
-        icon: <GavelIcon style={{ fontSize: 30 }}/>,
-        svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/gavelGreen.svg',
+        icon: <AccountBalanceIcon style={{ fontSize: 30 }}/>,
+        svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/orgTenderGreen.svg',
         subHeaderUrlParam: '',
         subHeaderText: 'Закупающая организация',
         contentTextParam: 'procuring_entity', 

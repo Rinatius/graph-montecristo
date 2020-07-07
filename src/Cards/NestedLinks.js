@@ -94,10 +94,24 @@ const NestedLinks = (props) => {
         && cardConfig[label].links 
         && cardConfig[label].links.includes(key)) {
       const keys = getKeyRelationshipIds(key)
+
+      let newKey = ''
+
+      // if node.reverseLinks AND key in reverseLinks: 
+      
+      if (Object.keys(cardConfig[label].reverseLinks).length !== 0 && Object.keys(cardConfig[label].reverseLinks).includes(key)) {
+        newKey = cardConfig[label].reverseLinks[key]
+        //console.log("1 LIST OF RELS:", listOfRelationships, "| KEY:", key, "| NODE: ", label)
+        //console.log("2 KEY: ", key, "| NEW KEY:", newKey, "| reverseLinks: ", cardConfig[label].reverseLinks)
+      }
+      else {
+        newKey = key
+      }
+  
           
       return(
         <ListItem style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
-          <ListItemText primary={translate(key, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
+          <ListItemText primary={translate(newKey, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
           <ListItemIcon className={classes.listItemIcon}>
             <AccountTreeIcon />
           </ListItemIcon>
