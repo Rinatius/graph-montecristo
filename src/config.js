@@ -72,7 +72,7 @@ const cardConfig = {
         label: 'KgProcurement',
         style: {backgroundColor: '#00897b'},
         icon: <MonetizationOnIcon style={{ fontSize: 30 }}/>,
-        svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/monetizeYellow.svg',
+        svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/13c35330a9b7ae752e04638edb39068555ae9374/monetizeGreen.svg',
         subHeaderUrlParam: 'url',
         subHeaderText: 'Тендер',
         contentTextParam: 'procurement_object_no_quotes',
