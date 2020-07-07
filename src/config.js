@@ -63,7 +63,7 @@ const cardConfig = {
     },
     KgProcurement: {
         label: 'KgProcurement',
-        style: {backgroundColor: 'blue'},
+        style: {backgroundColor: '#00897b'},
         icon: <GavelIcon style={{ fontSize: 30 }}/>,
         svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/gavelGreen.svg',
         subHeaderUrlParam: 'url',
@@ -74,7 +74,7 @@ const cardConfig = {
     },
     KgProcurementEntitiesWithAddresses: {
         label: 'KgProcurementEntitiesWithAddresses',
-        style: {backgroundColor: 'blue'},
+        style: {backgroundColor: '#00897b'},
         icon: <GavelIcon style={{ fontSize: 30 }}/>,
         svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/83020b7357a5888d237b3661800fec934f692be8/gavelGreen.svg',
         subHeaderUrlParam: '',
