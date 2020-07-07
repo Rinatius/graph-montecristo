@@ -38,5 +38,8 @@ const NestedProperties = (props) => {
         </div>
     )
 }
+const areEqual = (prevProps, nextProps) => {
+  return (prevProps.node.properties === nextProps.node.properties)
+}
 
-export default NestedProperties
+export default React.memo(NestedProperties, areEqual);
