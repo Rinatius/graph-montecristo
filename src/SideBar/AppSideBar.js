@@ -83,8 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
   searchBar: {
     width: '600px', 
-    paddingLeft: 7, 
-    paddingRight: 7,
+    paddingLeft: 13, 
+    paddingRight: 13,
     border: '2px solid gray', 
     borderRadius: 25,
   },
@@ -128,6 +128,11 @@ export default function PersistentDrawerLeft(props) {
           value={props.searchText}
           onChange={props.handleSearchTextChange}
           placeholder="Search..."
+          onKeyPress = {(event) => {
+            if (event.key === 'Enter') {
+              props.handleGoClick();
+            }
+          }}
           InputProps={{
             disableUnderline: true,
             inputProps: {

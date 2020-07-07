@@ -1,23 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MinimizeIcon from '@material-ui/icons/Minimize';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Divider from '@material-ui/core/Divider'
 
 import NestedLinks from './NestedLinks'
-import shorten from './utils/shorten'
 import NestedProperties from './NestedProperties'
 import cardConfig from '../config'
 
@@ -25,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 240,
       textAlign: "left",
-      height : 320
+      height : "auto"
     },
     media: {
       height: 0,
@@ -46,17 +40,15 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
       paddingTop: 0,
-      paddingBottom: 0
-    }
+      paddingBottom: 0,
+      "&:last-child": {
+        paddingBottom: 7
+      }
+    },
   }));
 
   const RecipeReviewCard = (props) => {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
 
     let style = {}
     let avatar = ''
@@ -87,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
           }
           subheader={<Typography>{subheader}</Typography>} 
         />
-        <CardContent className={classes.cardContent}>
+        <CardContent classes={{root: classes.cardContent}} >
           <NestedProperties node={props.node}/>
           <Divider style={{marginTop: 8}} />
           <NestedLinks

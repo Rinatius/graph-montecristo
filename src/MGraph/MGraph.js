@@ -19,7 +19,7 @@ const displayGraph = (props) => {
     // if node.id is in array, apply viewGenerator
 
     if (cardNodeIds.includes(node.id)) { 
-     node.size = 3000;
+     node.size = 4000;
      node.dispLabel = " "
      node.viewGenerator = (n) => {
       return <Card 
