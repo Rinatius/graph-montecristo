@@ -29,7 +29,6 @@ const displayGraph = (props) => {
                 onButtonClick={props.onButtonClick}
                 onMinimizeClick={props.onMinimizeClick} />
     }} else { // else return SVG icon 
-      console.log("SVG: ", node.labels)
       node.svg = CardConfig[node.labels[0]].svg
       node.size = 600
       node.fontSize = 16

@@ -132,7 +132,9 @@ class GraphComponent extends Component{
     } else {
       updatedVisibleGraph = this.mergeGraphs(ids, visibleGraph, invisibleGraph)
     }
+    const nodes = this.findNodes(updatedVisibleGraph.nodes, updatedVisibleGraph.edges, ids)
     this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
+    this.updateInvisible(Object.keys(nodes), updatedVisibleGraph, invisibleGraph)
   }
 
   removeFromArray = (nodeId) => {
