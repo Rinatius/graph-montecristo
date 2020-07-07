@@ -60,6 +60,28 @@ const cardConfig = {
         contentTextParam: 'lot_name',
         properties: ['lot_name'],
         links: ['PARTICIPATED_IN', 'INCLUDES_LOTS']
+    },
+    KgProcurement: {
+        label: 'KgProcurement',
+        style: {backgroundColor: 'blue'},
+        icon: <GavelIcon style={{ fontSize: 30 }}/>,
+        svg:  'https://firebasestorage.googleapis.com/v0/b/newagent-b0720.appspot.com/o/graph-montecristo%2FgavelIcon%20(3).svg?alt=media&token=935334ef-fe3f-44bb-ab97-5fbc44d4594d',
+        subHeaderUrlParam: 'url',
+        subHeaderText: 'Тендер',
+        contentTextParam: 'procurement_object_no_quotes',
+        properties: ['procurement_method'],
+        links: ['ANNOUNCED', 'INCLUDES_LOTS']
+    },
+    KgProcurementEntitiesWithAddresses: {
+        label: 'KgProcurementEntitiesWithAddresses',
+        style: {backgroundColor: 'blue'},
+        icon: <GavelIcon style={{ fontSize: 30 }}/>,
+        svg:  'https://firebasestorage.googleapis.com/v0/b/newagent-b0720.appspot.com/o/graph-montecristo%2FgavelIcon%20(3).svg?alt=media&token=935334ef-fe3f-44bb-ab97-5fbc44d4594d',
+        subHeaderUrlParam: '',
+        subHeaderText: 'Закупающая организация',
+        contentTextParam: 'procuring_entity',
+        properties: ['district'],
+        links: ['ANNOUNCED']
     }
 }
 
