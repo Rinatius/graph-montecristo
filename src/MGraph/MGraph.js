@@ -29,6 +29,7 @@ const displayGraph = (props) => {
                 onButtonClick={props.onButtonClick}
                 onMinimizeClick={props.onMinimizeClick} />
     }} else { // else return SVG icon 
+      console.log("SVG: ", node.labels)
       node.svg = CardConfig[node.labels[0]].svg
       node.size = 600
       node.fontSize = 16
@@ -43,7 +44,8 @@ const displayGraph = (props) => {
 
       // if PARTICIPATED_IN.properties not empty
      if (relationshipConfig[link.type].properties.length !== 0) {
-        
+        console.log('LINK COLOR: ', relationshipConfig[link.type].result[0].color)
+        link.color =  relationshipConfig[link.type].result[0].color
         let label = ''
         for ( let value of Object.values((relationshipConfig[link.type].properties))) { // for [proposed_price, result]
           label = label + link.properties[value] + ' '
