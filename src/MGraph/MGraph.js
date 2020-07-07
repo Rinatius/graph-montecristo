@@ -39,7 +39,11 @@ const displayGraph = (props) => {
    })
 
 
-   dispGraph.links = dispGraph.links.map((link) => {
+   dispGraph.links = dispGraph.links.map((clearLink) => {
+
+    console.log("HAKIM")
+    const link = {...clearLink, ...relationshipConfig[clearLink.type].linkConf }
+    console.log(link)
 
       // if PARTICIPATED_IN.properties not empty
      if (relationshipConfig[link.type].properties.length !== 0) {

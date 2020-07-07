@@ -99,25 +99,32 @@ export default cardConfig
 export const relationshipConfig = {
     
     CONTROLS: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     ANNOUNCED: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     DIRECTOR: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     INCLUDES_LOTS: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     NAME_SAKE: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     NAME_SAKE_INDIVIDUAL: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     PROBABLE_FATHER: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     PARTICIPATED_IN: {
         properties: ['proposed_price', 'result'],
@@ -125,15 +132,19 @@ export const relationshipConfig = {
             value: '(Подтверждено)',
             regex: true,
             color: "red"
-        }]
+        }],
+        linkConf: {'fontSize' : 14}
     },
     PROBABLE_SIBLING: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     PROBABLE_KID: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
     SAME_INN: {
-        properties: []
+        properties: [],
+        linkConf: {'fontSize' : 14}
     },
 }
