@@ -98,7 +98,13 @@ class App extends Component {
 
   returnPagination = () => {
     return (
-    <Grid container justify="center" >
+      <Grid container justify="center" style={{
+        position: 'absolute',
+        left: '50%',
+        bottom: '10px',
+        WebkitTransform: 'translateX(-50%)',
+        transform: 'translateX(-50%)'
+        }} >
       <Pagination count={this.state.listOfNodes.length} onChange={this.handlePaginationChange} size="small" showFirstButton showLastButton />
     </Grid>
     )
