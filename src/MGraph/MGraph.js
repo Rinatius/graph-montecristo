@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {Graph} from "react-d3-graph";
 import Card from '../Cards/Card';
 import CardConfig from '../config';
@@ -76,10 +76,20 @@ const displayGraph = (props) => {
 };
 
 const MGraph = (props) => {
-  
+
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight - 110);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowHeight(window.innerHeight - 110);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const myConfig = {
-    height: window.innerHeight - 110,
+    height: windowHeight,
     width:'100%',
     staticGraphWithDragAndDrop: true,
     // nodeHighlightBehavior: true,
