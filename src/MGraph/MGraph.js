@@ -48,11 +48,11 @@ const displayGraph = (props) => {
         for ( let value of Object.values((relationshipConfig[link.type].properties))) { // for [proposed_price, result]
           label = label + link.properties[value] + ' '
         }
-        link.label = label
+        link.dispLabel = label
         console.log("LINK LABLES", link.label, link)
      }
      else {
-        link.label = translate(link.type, 'ru')
+        link.dispLabel = translate(link.type, 'ru')
      }
      return link
     })
@@ -100,7 +100,7 @@ const MGraph = (props) => {
     link: {
       highlightColor: "lightblue",
       renderLabel: true,
-      labelProperty: 'label'
+      labelProperty: 'dispLabel'
 
     },
   };
