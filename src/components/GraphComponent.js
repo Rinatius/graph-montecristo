@@ -7,6 +7,8 @@ import './my-svg.svg'
 import MGraph from "../MGraph/MGraph";
 import * as gh from './graphHelpers.js'
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class GraphComponent extends Component{
 
   driver = neo4j.driver('bolt://neo4j.kloop.io:7687')
@@ -14,7 +16,8 @@ class GraphComponent extends Component{
   state = {
     visibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
     invisibleGraph: Immutable.fromJS({nodes: {}, edges: {}}),
-    cardNodeIds: Immutable.fromJS([9350, 18766, 371947])
+    cardNodeIds: Immutable.fromJS([9350, 18766, 371947]),
+    showSpinner: false,
   }
 
   componentDidUpdate(prevProps) {
@@ -38,6 +41,7 @@ class GraphComponent extends Component{
   }
 
   executeQuery = (cypherQuery) => {
+    this.setState({showSpinner: true})
     const session = this.driver.session()
     session
       .run(cypherQuery)
@@ -49,7 +53,10 @@ class GraphComponent extends Component{
       .catch(error => {
         console.log(error)
       })
-      .then(() => session.close())
+      .then(() => {
+        session.close()
+        this.setState({showSpinner: false})
+      })
 
   }
 
@@ -163,6 +170,22 @@ class GraphComponent extends Component{
     }
   }
 
+  returnSpinner = () => {
+    return (
+    <div style = {{
+      position: 'absolute',
+      height: '100px',
+      width: '100px',
+      top: '50%',
+      left: '50%',
+      marginLeft: '-50px',
+      marginTop: '-50px',
+      }}>
+      <CircularProgress size={100} style={{color: 'grey'}}/>
+    </div>
+    )
+  }
+
   render() {
     let graph = null
     if (Object.keys(this.state.visibleGraph.toJS().nodes).length !== 0) {
@@ -176,7 +199,8 @@ class GraphComponent extends Component{
     }
     return(
       <div>
-        {graph}
+        {this.state.showSpinner ? this.returnSpinner() : graph}
+        {/* {graph} */}
       </div>
     )
   }
