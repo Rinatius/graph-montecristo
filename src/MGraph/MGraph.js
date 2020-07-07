@@ -44,15 +44,24 @@ const displayGraph = (props) => {
 
       // if PARTICIPATED_IN.properties not empty
      if (relationshipConfig[link.type].properties.length !== 0) {
-        console.log('LINK COLOR: ', relationshipConfig[link.type].result[0].color)
-        link.color =  relationshipConfig[link.type].result[0].color
+        
+        relationshipConfig[link.type].result.forEach(conf => {
+          // if node.result in value AND regex=true
+          if (conf.value.toLowerCase().includes(link.properties.result.substring(0,7).toLowerCase()) && conf.regex) {
+            link.color = conf.color
+          }
+          else {
+            console.log("LINK NOT RED")
+          }});
+
         let label = ''
         for ( let value of Object.values((relationshipConfig[link.type].properties))) { // for [proposed_price, result]
           label = label + link.properties[value] + ' '
         }
         link.dispLabel = label
-        console.log("LINK LABLES", link.label, link)
+
      }
+     // if PARTICIPATED_IN.properties IS empty
      else {
         link.dispLabel = translate(link.type, 'ru')
      }
