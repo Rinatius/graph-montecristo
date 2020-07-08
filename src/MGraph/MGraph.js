@@ -6,8 +6,9 @@ import translate from '../Cards/utils/translate';
 import shorten from '../Cards/utils/shorten';
 import {relationshipConfig} from '../config';
 
-
+const objNode = {}
 const MGraph = (props) => {
+  const [dim, setDim] = useState({})
 
   const displayGraph = (props) => {
     const dispGraph = {
@@ -20,15 +21,17 @@ const MGraph = (props) => {
     dispGraph.nodes = dispGraph.nodes.map((node) => {
       // if node.id is in array, apply viewGenerator
       if (cardNodeIds.includes(node.id)) {
-        node.size = {
-          height: 4000,
-          width: 2400
-        }
+        
         node.fontSize = 16
         node.dispLabel = " "
         node.viewGenerator = (n) => {
+          const getDimensions = (dim, id) => {
+             setDim(dim)
+             objNode[id] = dim
+          }
           return <Card
             node={n}
+            getDimensions={getDimensions}
             vGraph={props.visibleGraph}
             iGraph={props.invisibleGraph}
             onButtonClick={props.onButtonClick}
@@ -38,12 +41,27 @@ const MGraph = (props) => {
         node.svg = CardConfig[node.labels[0]].svg
         node.size = 600
         node.fontSize = 16
+        node.highlightFontSize = 24
         node.dispLabel = shorten(node.properties[CardConfig[node.labels[0]].contentTextParam])
       }
 
       return node
     })
 
+    /////
+    dispGraph.nodes = dispGraph.nodes.map((node) => {
+      if (cardNodeIds.includes(node.id)) {
+        let height = objNode[node.id]
+        console.log("ID", node.id, "HEIGHT", height)
+        // node.size = objNode[node.id]
+        node.size = {
+          height: objNode[node.id],
+          width: 2400
+        }
+      }
+      return node
+    })
+    ////
 
     dispGraph.links = dispGraph.links.map((clearLink) => {
 

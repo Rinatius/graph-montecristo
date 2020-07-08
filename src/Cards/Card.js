@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -48,6 +48,22 @@ const useStyles = makeStyles((theme) => ({
   }));
 
   const RecipeReviewCard = (props) => {
+
+  const cardRef = useRef();
+  const [dimensions, setDimensions] = useState({ width:0, height: 0 });
+  props.getDimensions(dimensions.height, props.node.id)
+  console.log("HEIGHT", dimensions.height, "ID", props.node.id)
+
+  useEffect(() => {
+    if (cardRef.current) {
+      console.log("cardRef.current.offsetHeight", cardRef.current.offsetHeight * 10 + 20)
+      setDimensions({
+        width: cardRef.current.offsetWidth * 10,
+        height: cardRef.current.offsetHeight * 10 + 20
+      });
+    }
+  }, []);
+    
     const classes = useStyles();
 
     let style = {}
@@ -63,9 +79,8 @@ const useStyles = makeStyles((theme) => ({
           target="_blank">{cardConfig[label].subHeaderText}
         </a>
     }
-  
     return (
-      <Card className={classes.root}>
+      <Card className={classes.root} ref={cardRef}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar} style={style}>
