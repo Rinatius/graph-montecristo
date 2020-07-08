@@ -61,7 +61,7 @@ const cardConfig = {
         icon: <GavelIcon style={{ fontSize: 30 }}/>,
         svg:  'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/8f8c6843a73515bd2deb47f4b80b8cdf9c0d2451/gavelGreen.svg',
         subHeaderUrlParam: 'tender_url',
-        subHeaderText: 'Гос. закупки',
+        subHeaderText: 'Госзакупки',
         contentTextParam: 'lot_name',
         properties: ['lot_name', 'lot_sum_int'],
         links: ['PARTICIPATED_IN', 'INCLUDES_LOTS'],
