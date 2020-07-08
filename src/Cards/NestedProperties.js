@@ -4,6 +4,7 @@ import cardConfig from '../config'
 import shorten from './utils/shorten'
 import { makeStyles } from '@material-ui/core/styles';
 import translate from '../Cards/utils/translate';
+import formatDate from '../Cards/utils/formatDate';
 
 const useStyles = makeStyles((theme) => ({
     contentTextParam: {
@@ -23,7 +24,7 @@ const NestedProperties = (props) => {
                 && cardConfig[label].contentTextParam !== prop) {
             listOfProps.push(
                 <Typography key={prop + label} variant="body2" color="textPrimary" component="p">
-                    { translate(prop, 'ru') + ': ' +props.node.properties[prop] }
+                    {prop === 'publication_date' ? translate(prop, 'ru') + ': ' + formatDate(props.node.properties[prop]) : translate(prop, 'ru') + ': ' +props.node.properties[prop] }
                 </Typography>
             )
         }

@@ -127,7 +127,7 @@ export default function PersistentDrawerLeft(props) {
           className={classes.searchBar}
           value={props.searchText}
           onChange={props.handleSearchTextChange}
-          placeholder="Search..."
+          placeholder="Поиск..."
           onKeyPress = {(event) => {
             if (event.key === 'Enter') {
               props.handleGoClick();
@@ -140,17 +140,17 @@ export default function PersistentDrawerLeft(props) {
             }
           }}
         />
-        <Tooltip title="Search">
+        <Tooltip title="Поиск">
           <IconButton aria-label="search" onClick={props.handleGoClick}>
             <SearchIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Reset">
+        <Tooltip title="Обновить">
           <IconButton aria-label="reset" onClick={props.handleResetClick}>
             <LoopIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Clear">
+        <Tooltip title="Очистить">
           <IconButton aria-label="clear" onClick={props.handleClearClick}>
             <ClearIcon />
           </IconButton>
@@ -173,7 +173,7 @@ export default function PersistentDrawerLeft(props) {
         </div>
         <Divider />
         <List>
-        {['Enter your query below'].map((text, index) => (
+        {['Введите запрос:'].map((text, index) => (
           <ListItem key={text}>
             <ListItemText primary={text} />
           </ListItem>
@@ -183,7 +183,7 @@ export default function PersistentDrawerLeft(props) {
       <List>
           <TextField
            id="query"
-           label="Query"
+           label="Запрос"
            variant="outlined" 
            multiline
            value={props.cypherQuery}
@@ -193,7 +193,7 @@ export default function PersistentDrawerLeft(props) {
         <Button variant="contained"
                 className={classes.GoButton}
                 onClick={props.handleGoClick}
-                startIcon={<PlayArrowIcon />}>Run Query</Button>
+                startIcon={<PlayArrowIcon />}>Поиск</Button>
       </List>
       </Drawer>
       <main style={{padding: 0, height: '100%'}}
