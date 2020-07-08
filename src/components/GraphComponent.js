@@ -140,10 +140,10 @@ class GraphComponent extends Component{
       ids = edges.filter(el => !ids.includes(el))
     } else {
       updatedVisibleGraph = this.mergeGraphs(ids, visibleGraph, invisibleGraph)
+      const nodes = this.findNodes(updatedVisibleGraph.nodes, updatedVisibleGraph.edges, ids)
+      this.updateInvisible(Object.keys(nodes), updatedVisibleGraph, invisibleGraph)
     }
-    const nodes = this.findNodes(updatedVisibleGraph.nodes, updatedVisibleGraph.edges, ids)
     this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
-    this.updateInvisible(Object.keys(nodes), updatedVisibleGraph, invisibleGraph)
   }
 
   removeFromArray = (nodeId) => {
@@ -167,20 +167,14 @@ class GraphComponent extends Component{
   handleMinimezeClick = (nodeId) => {
     console.log('minimize clicked', nodeId)
     const cardNodeIds = this.removeFromArray(nodeId)
-    console.log('card nodes after minimize: ', cardNodeIds)
     this.setState({cardNodeIds: Immutable.fromJS(cardNodeIds)})
   }
 
   handleNodeClick = (nodeId) => {
     console.log('node clicked', nodeId)
-    console.log(parseInt(nodeId))
-    console.log(this.state.cardNodeIds.toJS())
-    console.log(!this.state.cardNodeIds.toJS().includes(parseInt(nodeId)))
     if (!this.state.cardNodeIds.toJS().includes(parseInt(nodeId))){
       const cardNodeIds = this.addToArray(nodeId)
       this.setState({cardNodeIds: Immutable.fromJS(cardNodeIds)})
-    } else {
-      console.log('doing nothing')
     }
   }
 

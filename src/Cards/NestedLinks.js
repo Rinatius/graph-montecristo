@@ -110,7 +110,7 @@ const NestedLinks = (props) => {
   
           
       return(
-        <ListItem style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
+        <ListItem key={key} style={{padding: '1px'}} button onClick={() => props.onButtonClick(keys)}>          
           <ListItemText primary={translate(newKey, 'ru') + ' (' + listOfRelationships[key] + ')'} primaryTypographyProps={{variant:"body2"}} />
           <ListItemIcon className={classes.listItemIcon}>
             <AccountTreeIcon />

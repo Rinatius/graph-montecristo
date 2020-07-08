@@ -21,7 +21,7 @@ const NestedProperties = (props) => {
                 && cardConfig[label].properties.includes(prop)
                 && cardConfig[label].contentTextParam !== prop) {
             listOfProps.push(
-                <Typography variant="body2" color="textPrimary" component="p">
+                <Typography key={prop + label} variant="body2" color="textPrimary" component="p">
                     { props.node.properties[prop] }
                 </Typography>
             )
