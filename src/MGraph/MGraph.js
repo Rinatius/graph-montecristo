@@ -111,7 +111,8 @@ const MGraph = (props) => {
     // staticGraphWithDragAndDrop: true,
     // nodeHighlightBehavior: true,
     node: {
-      labelProperty: "dispLabel"
+      labelProperty: "dispLabel",
+      fontSize: 14
     },
     //   color: "lightgreen",
     //   labelProperty: 'label',
