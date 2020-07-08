@@ -66,13 +66,10 @@ const MGraph = (props) => {
           label = label + link.properties[value] + ' '
         }
         link.dispLabel = label
-        link.fontSize = 16
-
       }
       // if PARTICIPATED_IN.properties IS empty
       else {
         link.dispLabel = translate(link.type, 'ru')
-        link.fontSize = 16
       }
       return link
     })
