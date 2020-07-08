@@ -10,7 +10,20 @@
     "PROBABLE_SIBLING": "брат-сестра?",
     "PROBABLE_KID": "сын-дочь?",
     "SAME_INN": "ИНН",
+
     "PARTICIPANTS": "участники",
     "TENDER": "тендер",
-    "ENTITY": "закупающая орг"
+    "ENTITY": "закупающая орг",
+
+    "inn": "ИНН",
+    "head_name_sur": "директор",
+    "procurement_method" : "метод",
+    "publication_date": "дата",
+    "lot_sum_int": "начальная цена",
+    "region": "область", 
+    "district": "район",
+    "street": "улица", 
+    "home": "дом", 
+    "apartment": "квартира"
+
 }

@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import cardConfig from '../config'
 import shorten from './utils/shorten'
 import { makeStyles } from '@material-ui/core/styles';
+import translate from '../Cards/utils/translate';
 
 const useStyles = makeStyles((theme) => ({
     contentTextParam: {
@@ -22,7 +23,7 @@ const NestedProperties = (props) => {
                 && cardConfig[label].contentTextParam !== prop) {
             listOfProps.push(
                 <Typography key={prop + label} variant="body2" color="textPrimary" component="p">
-                    { props.node.properties[prop] }
+                    { translate(prop, 'ru') + ': ' +props.node.properties[prop] }
                 </Typography>
             )
         }

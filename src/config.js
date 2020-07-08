@@ -15,7 +15,7 @@ const cardConfig = {
         subHeaderUrlParam: 'url',
         subHeaderText: 'Минюст',
         contentTextParam: 'name_ru',
-        properties: ['name_ru', 'inn', 'head_name_sur', 'street'],
+        properties: ['inn', 'head_name_sur', 'region', 'district', 'street', 'home', 'apartment'],
         links: ['CONTROLS', 'DIRECTOR', 'SAME_INN'],
         reverseLinks: {}
     },
@@ -49,7 +49,7 @@ const cardConfig = {
         icon: <BusinessIcon style={{ fontSize: 30 }}/>,
         svg: 'https://raw.githubusercontent.com/aleks-walker/graph-montecristo-config/8f8c6843a73515bd2deb47f4b80b8cdf9c0d2451/busiessGreen.svg',
         subHeaderUrlParam: '',
-        subHeaderText: 'Гос. закупки',
+        subHeaderText: 'Госзакупки',
         contentTextParam: 'name',
         properties: ['inn'],
         links: ['PARTICIPATED_IN', 'NAME_SAKE_INDIVIDUAL'],
@@ -63,7 +63,7 @@ const cardConfig = {
         subHeaderUrlParam: 'tender_url',
         subHeaderText: 'Гос. закупки',
         contentTextParam: 'lot_name',
-        properties: ['lot_name'],
+        properties: ['lot_name', 'lot_sum_int'],
         links: ['PARTICIPATED_IN', 'INCLUDES_LOTS'],
         reverseLinks: {'PARTICIPATED_IN':'PARTICIPANTS',
                         'INCLUDES_LOTS': 'TENDER'}
@@ -76,7 +76,7 @@ const cardConfig = {
         subHeaderUrlParam: 'url',
         subHeaderText: 'Тендер',
         contentTextParam: 'procurement_object_no_quotes',
-        properties: ['procurement_method'],
+        properties: ['procurement_method', 'publication_date'],
         links: ['ANNOUNCED', 'INCLUDES_LOTS'],
         reverseLinks: {'ANNOUNCED':'ENTITY'}
     },
