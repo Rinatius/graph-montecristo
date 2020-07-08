@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/graph-montecristo/precache-manifest.3ba5b7fed1e5294fc5f10af11d2c8b64.js"
+  "/graph-montecristo/precache-manifest.e116a27d2a4b511ac40317f1198c4ab3.js"
 );
 
 self.addEventListener('message', (event) => {
