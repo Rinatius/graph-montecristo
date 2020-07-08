@@ -17,7 +17,8 @@ class App extends Component {
     goClick: false,
     clearGraph: false,
     listOfNodes: [],
-    showPagination: false
+    showPagination: false,
+    errorMessage: ''
   }
 
   componentDidMount() { 
@@ -69,6 +70,7 @@ class App extends Component {
     })
     .catch(error => {
       // handle error
+      this.setState({errorMessage: 'Произошла ошибка при запросе данных. Проверье интернет-соединение' })
       console.log('There has been a problem with your fetch operation: ' + error.message);
     })
   }
@@ -94,6 +96,9 @@ class App extends Component {
   handleResetClick = () => {
     this.handleClearClick()
     this.handleGoClick()
+  }
+  handleError = (errorMessage) => {
+    this.setState({errorMessage: errorMessage})
   }
 
   returnPagination = () => {
@@ -121,12 +126,15 @@ class App extends Component {
           handleGoClick={this.handleGoClick} 
           handleResetClick={this.handleResetClick}
           handleClearClick={this.handleClearClick}>
+          {this.state.errorMessage &&
+            <h3 className="error"> { this.state.errorMessage } </h3> }
           <GraphComponent 
             cypherQuery={this.state.cypherQuery}
             isGoClick={this.state.goClick}
             goClick={this.goClick}
             isClearGraph={this.state.clearGraph}
-            clearClick={this.clearClick}/>
+            clearClick={this.clearClick}
+            errorMessage={this.handleError}/>
             {this.state.showPagination? this.returnPagination() : null}
         </AppSideBar>
       </div>

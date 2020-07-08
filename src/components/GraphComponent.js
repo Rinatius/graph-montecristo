@@ -39,6 +39,7 @@ class GraphComponent extends Component{
   }
 
   goClick = (query) => {
+    this.props.errorMessage('')
     this.executeQuery(query)
   }
 
@@ -57,6 +58,7 @@ class GraphComponent extends Component{
       })
       .catch(error => {
         console.log(error)
+        this.props.errorMessage('Произошла ошибка во время выполнения запроса')
       })
       .then(() => {
         session.close()
@@ -82,6 +84,7 @@ class GraphComponent extends Component{
       })
       .catch(error => {
         console.log(error)
+        this.props.errorMessage('Произошла ошибка при обработке связей')
       })
       .then(() => {
         invisibleSession.close()

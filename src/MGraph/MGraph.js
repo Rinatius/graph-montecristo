@@ -18,10 +18,7 @@ const MGraph = (props) => {
     let cardNodeIds = props.cardNodeIds.toJS()
     //console.log('mgraph card nodes: ', cardNodeIds)
     dispGraph.nodes = dispGraph.nodes.map((node) => {
-      console.log("NODE", node)
-
       // if node.id is in array, apply viewGenerator
-
       if (cardNodeIds.includes(node.id)) {
         node.size = {
           height: 4000,
