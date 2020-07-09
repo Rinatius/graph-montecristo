@@ -52,11 +52,9 @@ const useStyles = makeStyles((theme) => ({
   const cardRef = useRef();
   const [dimensions, setDimensions] = useState({ width:0, height: 0 });
   props.getDimensions(dimensions.height, props.node.id)
-  console.log("HEIGHT", dimensions.height, "ID", props.node.id)
 
   useEffect(() => {
     if (cardRef.current) {
-      console.log("cardRef.current.offsetHeight", cardRef.current.offsetHeight * 10 + 20)
       setDimensions({
         width: cardRef.current.offsetWidth * 10,
         height: cardRef.current.offsetHeight * 10 + 20

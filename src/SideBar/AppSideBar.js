@@ -195,6 +195,14 @@ export default function PersistentDrawerLeft(props) {
                 onClick={props.handleGoClick}
                 startIcon={<PlayArrowIcon />}>Поиск</Button>
       </List>
+      <List>
+          <TextField
+           id="coords"
+           label="Координаты"
+           variant="outlined" 
+           multiline
+           value={JSON.stringify(props.nodeCoords)}/>
+      </List>
       </Drawer>
       <main style={{padding: 0, height: '100%'}}
         className={clsx(classes.content, {

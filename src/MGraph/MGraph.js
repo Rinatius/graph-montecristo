@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {Graph} from "react-d3-graph";
 import Card from '../Cards/Card';
 import CardConfig from '../config';
@@ -8,7 +8,7 @@ import {relationshipConfig} from '../config';
 
 const objNode = {}
 const MGraph = (props) => {
-  const [dim, setDim] = useState({})
+  const [dim, setDim] = useState({}) // DO NOT DELETE
 
   const displayGraph = (props) => {
     const dispGraph = {
@@ -48,16 +48,17 @@ const MGraph = (props) => {
       return node
     })
 
-    /////
+    ///// Dynamic height
     dispGraph.nodes = dispGraph.nodes.map((node) => {
       if (cardNodeIds.includes(node.id)) {
-        let height = objNode[node.id]
-        console.log("ID", node.id, "HEIGHT", height)
-        // node.size = objNode[node.id]
         node.size = {
           height: objNode[node.id],
           width: 2400
         }
+      }
+      if (props.newCoords && props.newCoords.hasOwnProperty(node.id)) {
+        node.x = props.newCoords[node.id].x
+        node.y = props.newCoords[node.id].y
       }
       return node
     })
@@ -124,6 +125,7 @@ const MGraph = (props) => {
   const myConfig = {
     height: windowHeight,
     width: windowWidth,
+    staticGraphWithDragAndDrop: props.newCoords ? true : false,
     //height: 1000,
     //width: 1000,
     // staticGraphWithDragAndDrop: true,
@@ -156,10 +158,29 @@ const MGraph = (props) => {
     },
   };
 
+  const graphRef = useRef()
+
+  useEffect(()=> {
+    handlePosChange()
+  })
+
+  const handlePosChange = () => {
+    let nodes = graphRef.current.state.nodes
+    let coords = {}
+    for (const [key, value] of Object.entries(nodes)) {
+      coords[key] = {x: value.x, y: value.y}
+    }
+    props.returnCoords(coords)
+  }
+
   return <Graph
+  ref={graphRef}
     config={myConfig}
     id="d3graph" // id is mandatory, if no id is defined rd3g will throw an error
     data={displayGraph(props)}
+    onNodePositionChange={(nodeId, x, y) => {
+      handlePosChange()
+    }}
     onDoubleClickNode={(nodeId) => {
       props.onNodeClick(nodeId)
     }}

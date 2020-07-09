@@ -18,7 +18,9 @@ class App extends Component {
     clearGraph: false,
     listOfNodes: [],
     showPagination: false,
-    errorMessage: ''
+    errorMessage: '',
+    newCoords: null,
+    coords: {}
   }
 
   componentDidMount() { 
@@ -34,6 +36,16 @@ class App extends Component {
     else if (urlString.url) {
       console.log("urlString", urlString)
       this.fetchData(urlString)
+    }
+    else if (urlString.coords) {
+      let dec = decodeURI(urlString.coords);
+      let obj = JSON.parse(dec)
+      console.log(obj)
+      let ids = Object.keys(obj)
+      query = "MATCH (n) where id(n) in [" + ids + "] return n"
+      this.setState({newCoords: obj})
+      this.setState({cypherQuery: query})
+      this.handleGoClick()
     }
   }
 
@@ -115,6 +127,10 @@ class App extends Component {
     )
   }
 
+  returnCoords = (obj) => {
+    this.setState({coords: obj})
+  }
+  
   render() {
     return(
       <div className='App'>
@@ -125,7 +141,9 @@ class App extends Component {
           handleSearchTextChange={this.handleSearchTextChange}
           handleGoClick={this.handleGoClick} 
           handleResetClick={this.handleResetClick}
-          handleClearClick={this.handleClearClick}>
+          handleClearClick={this.handleClearClick}
+          nodeCoords={this.state.coords}
+          >
           {this.state.errorMessage &&
             <h3 className="error"> { this.state.errorMessage } </h3> }
           <GraphComponent 
@@ -134,7 +152,10 @@ class App extends Component {
             goClick={this.goClick}
             isClearGraph={this.state.clearGraph}
             clearClick={this.clearClick}
-            errorMessage={this.handleError}/>
+            errorMessage={this.handleError}
+            returnCoords={this.returnCoords}
+            newCoords={this.state.newCoords}
+            />
             {this.state.showPagination? this.returnPagination() : null}
         </AppSideBar>
       </div>

@@ -217,7 +217,10 @@ class GraphComponent extends Component{
         onNodeClick={this.handleNodeClick}
         visibleGraph={this.state.visibleGraph}
         invisibleGraph={this.state.invisibleGraph}
-        cardNodeIds={this.state.cardNodeIds}/>
+        cardNodeIds={this.state.cardNodeIds}
+        returnCoords={this.props.returnCoords}
+        newCoords={this.props.newCoords}
+        />
     }
     return(
       <div>
