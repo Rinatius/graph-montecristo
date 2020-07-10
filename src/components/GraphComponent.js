@@ -104,7 +104,7 @@ class GraphComponent extends Component{
     return updatedVisibleGraph
   }
 
-  findNodes(nodes, edges, edgeIds) {
+  findNodes(nodes, edges, edgeIds, nodeKey) {
     const foundNodes = {} 
     Object.keys(nodes).forEach(nodeKey => {
       edgeIds.forEach(edgeId => {
@@ -116,36 +116,44 @@ class GraphComponent extends Component{
     return foundNodes
   }
 
-  removeElements = (ids, vGraph, iGraph) => {
+  removeElements = (ids, nodeKey, vGraph, iGraph) => {
     const innocentNodes = this.findNodes(vGraph.nodes, vGraph.edges, ids)
     ids.forEach((id) => {
-      let nodeToRemove = vGraph.nodes[vGraph.edges[id].target]
+      let direction = 'target'
+      let nodeToRemove = vGraph.nodes[vGraph.edges[id][direction]]
+      if (nodeToRemove.id === parseInt(nodeKey)){
+        direction = 'source'
+        nodeToRemove = vGraph.nodes[vGraph.edges[id][direction]]
+      }
+      
       if (!Object.keys(innocentNodes).includes(String(nodeToRemove.id))){
-        delete vGraph.nodes[vGraph.edges[id].target]
+        delete vGraph.nodes[vGraph.edges[id][direction]]
         delete vGraph.edges[id]
       }
       // delete iGraph.nodes[iGraph.edges[id].source]
       // delete iGraph.nodes[iGraph.edges[id].target]
       // delete iGraph.edges[id]
     })
+    console.log('remove vGraph result: ', vGraph)
     return [vGraph, iGraph]
   }
 
-  handleButtonClick = (ids) => {
+  handleButtonClick = (ids, nodeKey) => {
     const edges = Object.keys(this.state.visibleGraph.toJS().edges)
     let visibleGraph = this.state.visibleGraph.toJS()
     let invisibleGraph = this.state.invisibleGraph.toJS()
     let updatedVisibleGraph = null
     // if ids are already in visible graph
-    if (ids.every(el => edges.includes(el))) {
-      const graphs = this.removeElements(ids, visibleGraph, invisibleGraph)
-      updatedVisibleGraph = graphs[0]
-      ids = edges.filter(el => !ids.includes(el))
-    } else {
+    // if (ids.every(el => edges.includes(el))) {
+    //   const graphs = this.removeElements(ids, nodeKey, visibleGraph, invisibleGraph)
+    //   updatedVisibleGraph = graphs[0]
+    //   // ids = edges.filter(el => !ids.includes(el))
+    // } else {
       updatedVisibleGraph = this.mergeGraphs(ids, visibleGraph, invisibleGraph)
+    // }
       const nodes = this.findNodes(updatedVisibleGraph.nodes, updatedVisibleGraph.edges, ids)
       this.updateInvisible(Object.keys(nodes), updatedVisibleGraph, invisibleGraph)
-    }
+    console.log('updated visible graph: ', updatedVisibleGraph)
     this.setState({visibleGraph: Immutable.fromJS(updatedVisibleGraph)})
   }
 
