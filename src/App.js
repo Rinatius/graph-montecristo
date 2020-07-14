@@ -94,22 +94,28 @@ class App extends Component {
     .then(response => {
       // handle success
       let query = 'ERROR'
+      let length = 0
       if (response.data.nodes) {
         let nodes = response.data.nodes
         query = "MATCH (n) where id(n) in [" + nodes[0] + "] return n"
+        length = nodes.length
         this.setState({listOfNodes: nodes})
       }
       else if (response.data.coords) {
         let coords = response.data.coords
         let ids = Object.keys(coords[0])
         query = "MATCH (n) where id(n) in [" + ids + "] return n"
+        length = coords.length
         this.setState({newCoords: coords[0], allCoords: coords})
       }
       if (response.data.links && (response.data.nodes || response.data.coords)) {
         let links = response.data.links
         this.setState({newLinks: links[0], allLinks: links})
       }
-      this.setState({showPagination: true, cypherQuery: query})
+      if (length > 1) {
+        this.setState({showPagination: true})
+      }
+      this.setState({cypherQuery: query})
       this.handleGoClick()
     })
     .catch(error => {

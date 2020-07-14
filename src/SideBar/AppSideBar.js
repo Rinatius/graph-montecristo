@@ -212,7 +212,7 @@ export default function PersistentDrawerLeft(props) {
            value={JSON.stringify(props.nodeLinks)}/>
       </List>
       </Drawer>
-      <main style={{padding: 0, height: '100%'}}
+      <main style={{padding: 0, height: '100%', background: 'transparent'}}
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
