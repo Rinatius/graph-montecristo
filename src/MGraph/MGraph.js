@@ -119,10 +119,22 @@ const MGraph = (props) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  let zoom = null
+ 
+  if (props.zoom) {
+    zoom = props.zoom
+  }
+
+  useEffect(()=>{
+    props.resetZoom(null)
+  }, [])
+
   const myConfig = {
     height: windowHeight,
     width: windowWidth,
     staticGraphWithDragAndDrop: props.newCoords ? true : false,
+    initialZoom: zoom,
+    // panAndZoom: true,
     //height: 1000,
     //width: 1000,
     // staticGraphWithDragAndDrop: true,
@@ -164,7 +176,6 @@ const MGraph = (props) => {
     }
     let links = graphRef.current.state.d3Links
     props.returnLinks(links)
-    
   })
 
   const handlePosChange = () => {

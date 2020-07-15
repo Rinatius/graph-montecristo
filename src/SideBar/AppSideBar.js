@@ -103,6 +103,12 @@ export default function PersistentDrawerLeft(props) {
     setOpen(false);
   };
 
+  const copyToClipboard = () => {
+    let data = JSON.stringify(props.nodeCoords)
+    console.log(data)
+    navigator.clipboard.writeText(data)
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -194,6 +200,12 @@ export default function PersistentDrawerLeft(props) {
                 className={classes.GoButton}
                 onClick={props.handleGoClick}
                 startIcon={<PlayArrowIcon />}>Поиск</Button>
+      </List>
+      <List>
+        <Button variant="contained"
+        onClick={copyToClipboard}>
+          Сохранить в буфер
+        </Button>
       </List>
       <List>
           <TextField

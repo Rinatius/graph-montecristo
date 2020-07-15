@@ -25,6 +25,8 @@ class App extends Component {
     newLinks: null,
     links: [],
     allLinks: null,
+    zoom: null,
+    allZoom: null
   }
 
   componentDidMount() { 
@@ -52,6 +54,9 @@ class App extends Component {
       let links = JSON.parse(decodedLinks)
       this.setState({newLinks: links})
     }
+    if (urlString.zoom) {
+      this.setState({zoom: urlString.zoom})
+    }
   }
 
   handleCypherQueryTextChange = (event) => {
@@ -68,6 +73,7 @@ class App extends Component {
     let nodes = null
     let coords = null
     let links = null
+    let zoom = null
 
     if (this.state.listOfNodes) {
       nodes = this.state.listOfNodes[value-1]
@@ -79,9 +85,12 @@ class App extends Component {
     if (this.state.allLinks && (this.state.listOfNodes || this.state.allCoords)) {
       links = this.state.allLinks[value-1]
     }
+    if (this.state.allZoom) {
+      zoom = this.state.allZoom[value-1]
+    }
 
     let query = "MATCH (n) where id(n) in [" + nodes + "] return n"
-    this.setState({cypherQuery: query, newCoords: coords, newLinks: links})
+    this.setState({cypherQuery: query, newCoords: coords, newLinks: links, zoom: zoom})
     this.handleGoClick()
   }
 
@@ -111,6 +120,10 @@ class App extends Component {
       if (response.data.links && (response.data.nodes || response.data.coords)) {
         let links = response.data.links
         this.setState({newLinks: links[0], allLinks: links})
+      }
+      if (response.data.zoom) {
+        let zoom = response.data.zoom
+        this.setState({zoom: zoom[0], allZoom: zoom})
       }
       if (length > 1) {
         this.setState({showPagination: true})
@@ -180,6 +193,10 @@ class App extends Component {
   returnLinks = (arr) => {
     this.setState({links: arr})
   }
+
+  resetZoom = (val) => {
+    this.setState({zoom: val})
+  }
   
   render() {
     return(
@@ -208,6 +225,8 @@ class App extends Component {
             newCoords={this.state.newCoords}
             returnLinks={this.returnLinks}
             newLinks={this.state.newLinks}
+            zoom={this.state.zoom}
+            resetZoom={this.resetZoom}
             />
             {this.state.showPagination? this.returnPagination() : null}
         </AppSideBar>

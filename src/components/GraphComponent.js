@@ -230,6 +230,8 @@ class GraphComponent extends Component{
         newCoords={this.props.newCoords}
         returnLinks={this.props.returnLinks}
         newLinks={this.props.newLinks}
+        zoom={this.props.zoom}
+        resetZoom={this.props.resetZoom}
         />
     }
     return(
